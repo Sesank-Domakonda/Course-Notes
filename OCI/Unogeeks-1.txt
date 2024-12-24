@@ -1,0 +1,79 @@
+Why OIC?
+=> Usually client has to use on premises some software say Oracle . The client has to buy the Servers, licence and the DB.
+=> Also setup a team to Administrate the above.
+so this involves huge investment costs.
+
+So this is solved with the cloud.
+
+If we take a typical client. They might be using hybrid IT landscape
+ex:
+ADP for payrolls.
+Salesforce for CRM.
+Oracle ERP for finance.
+
+Challenges in Integration?
+1)How to integrate Oracle applications? (ex: orcle hcm to erp)
+2)Integrating non oracle to oracle appliations.
+3)Legacy style Integration is too complex.
+4)Data couldn't be moved easily from cloud to on-premises and viceversa.
+5)Business process automation
+
+
+on premises mean by computing environment where the software and hardware are located within the physical confines of organization.
+like having servers, storage and other infrastructure.
+
+
+=>We use different instances for different purposes like.
+*Dev
+*Prod
+
+If we are supposed to migrate integrations from one environment to another we 
+*Export one after another - download the integration -> this will download all the underlying components used like connections,lookups used.
+then use import option to upload the integration.
+
+packages
+========
+=> Maintain the integrations in bulk.
+
+say we have 70 integrations related to ERP cloud
+            20 related to HCM cloud
+            10 related to Sales cloud.
+
+
+=>We can add the integration to a package while creating them.
+ex: If the integration is related to sales then add it to the Sales package.
+
+=> Go to packages-> click on the 3 dots to the right -> select export -> all the integration with all the libraries,connections etc will be downloaded.
+
+
+Creating an Integration
+========================
+When we click on the integration we can create choose among the 3 types
+*Application
+*Schedule
+*Event
+
+Application
+--------------
+=>When we create an integration as an appdriven a URL will be generated and that will trigger the application.
+=> So another application should trigger this application.
+
+ex: Scenario: user has been created in saleforce the same user must be added to oracle ERP.
+so here the salesforce(another application) is triggering the integration.
+
+Schedule
+----------
+=> Integration which gets triggered on a schedule basis.
+=> we use use schdule integrations for bulk processing.
+
+
+Event 
+------
+=> In OIC we can define an event(structure for the details we want to capture).
+=> We will be building an integration.
+
+
+Connections
+------------
+=>Help to establish connectivity from oracle instance with other applications.
+we pick an adapter

@@ -1,0 +1,58 @@
+Summary
+-------
+
+run
+*docker run <image_name> - runs a prebuilt image
+*docker run -p 3000:88 <image_name> - runs a contianer on the particular port.
+  -d will run the container in the detached mode.
+  -i - will run in the interactive mode (std in open)
+  -t - allocates a pseudo terminal
+  --rm <container_id> - automatically removes the unused container or after the main process of container has been completed.
+  -v <folder>:path - this will create named volumes with the specified name. (path on host: path in the container)
+  --network <network_name> - it will attach the container a network.
+
+build
+*docker build . - it builds the image based on the code.
+   -t - will name the images with tags 
+
+*docker ps -a -> it gives list of all the containers running and stopped.
+*docker images - gives list of all images
+
+*docker stop <Contianer_id> - stop the container.
+*docker container attach <container_id> - will reattch the container
+
+*docker start <container_id> - it will start the stopped Container
+  -a - this will run the container in the attached mode.
+  -i - will give the interactive mode in the console.
+
+*docker log <container_id> - will give the logs from a detached container.
+
+*docker -rm <container_id> - removes the containers
+*docker -rmi <image_id> - removes the images.
+
+
+*docker inspect <image_id> - it gives the information about the image.
+
+*docker cp <source> <destination(container_name)>   - allows to copy files/folders in and out of containers.
+
+*docker logs <container_name> - this will get all the logs (console.log()) the continer has generated.
+
+*docker tag <old_name:tag> <new_name> - this command is to retag/rename the existing image. After running this both the images exist.
+
+*docker push <image_name> - Used to push the image name
+*docker pull <image_name> - Used to pull the image name
+
+*docker tag local-image:tagname new-repo:tagname - command to rename the repo
+*docker push new-repo:tagname
+
+*docker volume create <volume_name> - create volumes
+*docker volume ls - gives list of all the volumes.
+*docker volume inspect <name> - gives the info about the volume.
+*docker volume rm <name_of_volume> - removes the volume.
+
+*docker exec -it <container id> /bin/bash -- it will go into the container and the argument /bin/bash will give a new shell inside the container to execute the commands.
+
+*docker network create <network_name> -- it creates a new network as the name.
+*docker network inspect <network_id> - it gives the info abput the container.
+*docker network rm <network name> - it gives the name of the network to be removed.
+

@@ -1,0 +1,22 @@
+We have to create the cluster.
+Kubernets helps with managing the PODS.
+=> It is responsible for managing the deployed application such that the containers are properly running.
+=> It will not take care of the infrastructure.
+
+=> Create the cluster and the Node, Setup API server ,kubelet and other kuberntes services/software on nodes.
+
+   What Kubernets will do?                           What you need to do / setup 
+ 
+1) Create you objects(Pods) and manage them          Create cluster and the node instances( worker + Master nodes)
+
+2) Monitor Pods and recreate them, scale pods        Setup API Server, kubelet and other kubernets services/ software on Nodes
+
+3) Kubernets utilizes the provided cloud resources   Create other (cloud) provider resources that might be needed (Load balance, Filesystems) 
+to apply your configuration/goals
+
+
+
+
+kubectl -- A tool for sending instrcution to the cluster (eg a new deployment). {President}
+Master node {general makes sure the instructions are passed on}
+Worker Nodes - execute the instructions

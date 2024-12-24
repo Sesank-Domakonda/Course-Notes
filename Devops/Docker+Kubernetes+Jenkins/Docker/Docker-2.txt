@@ -1,0 +1,100 @@
+In the microservices architectures we create an API for every APIs. Managing all the containers is really tough so we go for the Docker-compose.
+
+it has 4 parts
+version:  gives the version number of docker compose file format..
+services: represents the containers we want.
+network: communication
+volumes: storing the data from teh container.
+
+
+
+
+
+docker-compose.yml
+version: "3"
+
+services:
+  application:                                  //container name
+    image: springboot-myapplication-app
+    port :8080:8080
+
+    networks: 
+      - springboot-db-net
+
+    depends_on:                                // says that this container is depends on the db conatainer. So the DB container is created first.
+      - mysqldb                                // so the db container is created first and is mapped in the application.yml in the application. Use the same name of container name in the application.yml file too.
+
+    volumes:
+      - /data/springboot-app
+
+
+
+
+
+  mysqldb:                                       //db container name
+    image: mysql:5.7
+                                                 // we don't have to specify the port name  as it is used by the application internally. but the port is declared for the application as it should also be used ecternally.
+    networks: 
+      - springboot-db-net
+
+    environment:                                 // If we want to use a different username then we can declare it here.
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABSER = sbms
+
+    volumes:
+      - data/mysql
+
+
+networks:
+  springboot-db-net:
+
+So in the above Dockercompose file we are declaring two containers under services
+* application
+* mysqldb
+
+in the mysqldb we need to decclare 4 values
+* username
+* password
+* dbname
+* port
+
+so by default the username is root and it runs on the port number 3306.
+
+both the application and the db should runs on the same network. which is declared in the network.
+the connection of the springboot application to the mysql db is given in the application.yml file.
+
+
+application.yml file
+-----------------------
+spring.datasource.url=jdbc:mysql://mysqldb:3306/sbms?useSSL=false&allowPublicKeyRet           // we are declaring the mysqldb:3306 as the dbname and the port running with the db name                   rieval=true
+spring.datasource.username=root                                                               // giving the username
+spring.datasource.password=root                                                               // password
+spring.jpa.hibernate.ddl-auto=update
+
+logging.level.org.springframework=DEBUG
+logging.level.com.zaxxer.hikari=DEBUG
+
+
+Q)we can see that the keys for username and password are different in the application.yml in the application and the docker-compose file how are they mapped?
+ans: The environment properties in the docker-compose is used for creating the DB container. Dockercompose should give these environment properties to the mysql db while installing the mysql software. These are only specific to the docker-compose file.
+
+
+But the ones in the application.yml are specific to the java ones.
+
+
+Exercise
+--------
+If we change the name of the db in the springboot application /src/main/resources/application 
+|
+|
+v
+build an image from it
+|
+|
+v
+run docker-compose up then we will see that the db name in the application container will have a mismatch with the one in the Dockercompose file.
+
+to redo this change the db name in the application src/main/resource/application --> build an image again from it --> run docker compose file.
+
+
+Refer ashok notes for the process of connecting with the DB and querying the commands.

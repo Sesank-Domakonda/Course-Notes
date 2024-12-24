@@ -1,0 +1,236 @@
+Agenda
+--------
+*Images and containers
+*Using pre-built & Custom Images
+*Creating and managing containers.
+
+
+Images vs containers
+----------------------
+
+       Images                                             containers
+=>Templates/Blueprints for containers                 =>The running unit of software.
+=>Contain code + required tools. runtimes             
+
+https://drive.google.com/file/d/1Yt6D8x46z_l6jk99cKa3tbShdWaih-7K/view?usp=drive_link
+
+refere the slides.
+
+Images - encapsulate code + setup
+Once image is built then we can run multiple containers from that image.
+
+There are 2 types of creating a image:
+*Use an existing, pre-built image (Docker hub)
+*Build Custom
+
+=>We can create a image with the setup and code. and with the image we can run the containers multiple times
+
+docker run <image> - will find the image on docker hub and it will utilise it to create a container based on this image.
+docker run -it <image> - will give the interactive node shell to run commands.
+
+=>When we run the docker run -it node the node is running in the container created.
+we can see this by running the command node --version.(because this will show the version that has been installed locally).
+
+
+=>Images are used behind the scenes to hold the logic/code container needs .Then we create the instances of images with the run command with docker run command.
+
+Building the custom Images
+--------------------------
+=>we can start with 
+
+~FROM  - 
+this allows to build image on another image.
+ex: FROM node - this will buil our image on the node image existing on the docker hub.
+
+~COPY .. - 
+we specify two paths here. 
+First path - path outside of image where the files live and should be copied into the image.
+so . indicates all the folders/subfolders outside the docker file should be copied.
+
+Second path - Path inside image where those files should be stored.
+Every container created based on the image has its internal file system not related to the local machine file system.
+
+Now we can declare it as 
+
+COPY . /app - so it indicates all the folders/subfolders in the location where the docker file will be copied into the app folder.
+
+
+~RUN npm install - here the command will be run in the working directory. 
+~RUN node server.js - to start the server in the image.
+~CMD RUN server.js - this will start the image when the container has been created and not when the image has been created.
+
+~WORKDIR /app -  to specify to run the commands inside a working directory to run the commands.
+
+Note:
+-----
+difference between  
+RUN npm server.js                                              CMD RUN server.js
+--------------------------------------------------------------------------------------------
+will execute during the                                         This will set the default command to run when the 
+image build and install necessary packages,                     container is started, launching your server.
+resulting in an image layer containing the 
+installed packages.
+
+
+~EXPOSE 80 - indicates container listens on port 80 at runtime.
+~CMD ["node","server.js"] - indicates a node environment.
+
+~docker build . - build a docker image from a dockerfile and the files will be in the same folder as we are running command in.
+ after the image has been generated an id will be produced.
+
+ we can then run docker run <id>
+
+ ~docker stop <name of container> - this will stop the container running.
+ 
+~docker run -p 3000:80 <name_of_container> - This flag maps port 3000 on the host machine to port 80 on the container. This means that when you access port 3000 on your host machine (e.g., http://localhost:3000), the traffic is redirected to port 80 inside the container.
+
+Note: Whenever there are changes in the code we have to rebuild the images.
+      we cannot change images externally after building it it works even if the code is deleted.
+  
+
+Understanding Image layers
+---------------------------
+=> When we made changes in the code we build it again.
+=>When we build an image docker caches the result of every instruction and it will use this cache result.
+
+=>So in the Dockerfile every command acts like a layer. when there are no changes in the file and the image is rebuild then the build process is instantly done.
+  but when some layer changes then docker is not sure if the rest of the layers are the same as cached so it will execute them again.
+
+
+Summary
+-------
+
+=>We put code and the environment into image.
+=>we can instantiate multiple containers from images. 
+Container does not copy the code and environment into a file but it will use the environment stored in a image and allocate resources, memory to run the resource.
+Layers: Every instruction in the image creates a cacheable layer called image.
+for ex: running node server. the environment is not copied multiple times.
+
+=> when there is code + environment in the image we are running containers on it we are utiliziong the environment + code only once not multiple times,
+
+
+
+
+
+
+
+difference between docker start <id> and docker run -p 3000:88 <id> is that 
+-> docker start we are starting a stopped container.                           -> docker run -p 3000:88 <id> we are starting a new container from the port.
+-> runs in detached mode by default                                            -> runs in attached mode by default.
+
+attach and detach modes are nothing but the terminal continuty.
+so in the attach mode we will not be able to run any further commands.
+whereas in the detached modes we will ave the terminal ready to run the commands after the executing a certain command.
+
+docker start -a <name> - this starts a container in the attach mode                                    -> docker run -p 3000:88 -d <name> -> this will run the commands in the detached mode
+docker logs <container_name> - this will get all the logs (console.log()) the continer has generated.  -> docker attach <container_name> -> this is used to reattach a container if it has been started in the detached mode without -d.
+
+Input to the containers
+==========================
+=>Docker is not only limited to the webservers and listening to the outputs we can also input.
+
+Imagine a scenario where we require the input we first build the app
+
+start it                                                                                                      run it
+docker start <id> but it will get disconnected from the container                                             docker run <id> - it doen't take input so we use different flag (-i for stdin and -t for the terminal)
+docker start -a <id> - now we can also input and doesn't need a terminal                                      sdocker run -it <id>
+
+
+
+Removing the containers and images
+===================================
+
+=>docker ps -a gives the list of all the containers. we can remove the containers using the docker rm <id> command.
+*docker rm <id_!> <id_2>
+*docker containers prune - removes all the continers at once.
+
+*docker images -   gives the images 
+*docker rmi <id> - deltes an image
+*docker image prune - deletes all the images
+
+*docker run -p 3000:88 -d --rm <id>          - the flag --rm will automatically remove the unused containers.
+*docker image inspect - gives the info about the image.
+
+
+
+Copying Files int and out of container
+=======================================
+
+*docker cp <source> <destination(container_name)>   - allows to copy files/folders in and out of containers.
+
+ex: create a new text file and then run the command
+docker cp Docker/test.txt laugunvaugh:/test - here laugunvaugh:/test - provides the path to the copy the file into.
+
+we can check this bu deleting the test file and run the command the other way like docker cp laugunvaugh:/test Docker/test.txt 
+
+Note: Its not suggested to copy something into a conatiner with code changes.
+Copying contents out of container is good beacuse if the container generates the log files then we can copy them to the local machine.
+
+
+Naming Images and containers
+=============================
+
+Naming containers
+------------------
+
+we can name the container using the --name flag.
+*docker run -p 3000:80 --rm -d --name Sesank <container_id>
+
+=>make sure that the original name of ocntainer comes atlast.
+
+Naming Images
+-----------------
+We can name the images with a specialised set called 
+=>name ex: node
+=>tag  ex: 14
+
+note: we can use the tag in the FROM node:14 - to just be more specific of the version.
+we can do the same in naming our images.
+
+*docker build -t <name:tag> . - this will build a new image with the name-tag combination.
+we can later run the docker run <new_container_name> <image_name>.
+
+
+
+
+
+
+Sharing Images and containers
+==============================
+
+
+=>Everyone who has an image can create containers based on the image.
+
+                                    We can share it in two ways
+                                                |
+                        ----------------------------------------------
+                        |                                             |
+              Share the docker file                               Share a Build Image
+
+              =>simply run "docker build ."                       => Download an image, run a container based on it.
+              => Imp:The docker instructions                      => No build step requierd, everything is included in the image already.
+              might need surrounding file/folders
+              ex: source code                                       
+          
+
+
+Pushing Images to DockerHub
+----------------------------
+
+How can we share the finished build image? we can see the images build where can we find them?
+
+there are two main places where we can share images.
+*Docker hub   
+*Private Registry
+
+Docker hub - Official Docker image Registry                        Private registry
+=> We can store public, private and official images.               =>Any provider/ registry you want to use.
+                                                                   =>Only your own images.
+
+Push and pull the images to the docker hub
+------------------------------------------
+*docker push <Image_name> 
+*docker pull <Image_name>
+
+
+

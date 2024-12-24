@@ -1,0 +1,70 @@
+Cloning
+========
+->We have created our own repos from scratch.
+->We wanted to get a local copy of an existing repository instead.
+
+*git clone <url>
+-when we retrieve this it will clone all the files associated with the repository.
+-In addition git initializes a new repo on the machine giving access to the fill git history of the clones project.
+
+SSH Keys: 
+-You need to be authenticated on Github to do certain operations like pushing code from local machine.
+-Your terminal will prompt you every single time for your Github email and password unless you generate and configure an SSH key!.
+
+
+
+
+
+GIT remote
+----------
+=> Before we can push anything up to github, we need to tell Git about our rmeote repo on Github.
+=> We need to setup a "destination" to push up to.
+
+=>In GIT we refer to these "Destinations" as remotes.
+=>Each remotes is simply a URL where a hosted repository lives.
+
+Viewing Remotes
+---------------
+*git remotes -v - gives the list of remotes setup. (-v is just a verbose)
+
+A remote is two things
+*URL
+*label
+
+*git remote add <name> <URL> - here the Name is origin and the URL is the link to git repo.
+
+origin - is a conventional Git remote name but is not at all special.
+
+
+Git pushing
+-------------
+* git push <remote> <branch>
+ 
+
+What does git oush -u origin main mean by?
+-u stands for upstream.
+It referes to the main remote repo that a local repo is cloned or connected to.
+
+Usually we use the git push -u origin main for the first time.
+later we just use git push.
+
+
+Remote tracking Branches
+========================
+=> When we clone a repo we will have twoo types of references.
+*master branch reference
+*remote tracking branch reference.
+
+master branch reference: This points to the latest commit and then updates whenever new commit is made.
+remote tracking branch reference: This is the state of the master branch on the remote. We can't move this ourself. Its like a bookmark pointing to the last known commit.
+ca
+*git branch -r - this commands give the remote tracking branches
+*git checkout origin/main - using this we can switch to a specific commit/branch from the remote repository.
+
+
+
+=>By default we will we will have our local "main" branch reference the "origin/main" of the remote repo.
+
+
+Very imp Note: So whenever we clone a repo into out local it is important to note that we do not get all the branches. To have a look at another branches we just need to switch to the other branches
+which are in the remote.

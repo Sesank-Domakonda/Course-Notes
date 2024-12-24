@@ -1,0 +1,23 @@
+Controlling workflow and Job execution
+---------------------------------------
+
+=> We we able to write workflows from one point to another and if one job fails then the remaining execution stops.
+but we sometimes we need conditional execution of jobs.
+
+
+Conditional Jobs & Steps
+------------------------
+
+Jobs                                                                 Steps
+- conditional execution with if field                              - Conditional execution via if field.
+                                                                   - Continue-on-error field which allows to specify other steps execute even if one fails.
+
+
+Special Conditional Functions
+------------------------------
+
+failure() - Returns true when any previous step/job failed.
+success() - Returns true when none of the previous steps have failed.
+always() -  Causes the step to always execute even when cancelled.
+cancelled() - Returns true if the workflow has been cancelled.
+

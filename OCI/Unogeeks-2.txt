@@ -1,0 +1,82 @@
+Web Services
+------------
+=> web services are services offered over web.
+=>Web services enables communication among various applications by using open standards such as XML, WSDL and SOAP.
+=>Popular types of webservices are SOAP, REST.
+
+Web Services have two types of uses:
+1)Reusable application-components: currency conversion, weather reports, or even language translation as services.
+2)Connect existing software: With web services you can exchange data between different applications and differnet platforms.
+
+
+SOAP Web Services: (Simple Object Access Protocol)
+==================================================
+
+=> SOAP web service definition is captured in WSDL. It uses XML format for communication.
+
+SOAP message is an ordinary XML document containing the following elements:
+1) Envelope element - identifies XML document as a SOAP message
+2) Header element - contains header information
+3) Body element contains call and response information
+4) Fault element containing errors and status information.
+
+Service WSDL URL: https://servername/fscmService/ErpIntegrationService?WSDL
+
+servername - replaced with fusion cloud instance
+fscm - finance and supply chain modules
+
+
+operations
+----------
+
+In a SOAP service would contain operation -> these operations are the logical units 
+so when we invoke a SOAP service we are not invoking the whole service but a specific operation.
+
+=>Operations are  the actions performed by the API. Each operation corresponds to a specific task or function that API can perform.
+
+Payload
+--------
+=> Payload refers to the data carried inside a request or respose message.
+Request payload - input data
+Response payload - output data.
+
+Envelope element - It converts XML to SOAP message.
+In the header section we pass the authentication tokens.
+
+when we pass the WSDL URL to the Soap UI how come all the operations are seen?
+In the SOAP UI we passed the URL as an input which gave it all the operations.
+
+Data Types(XSD) -> Messages -> Porttype -> for ever operation
+
+In a WSDL file we have custom data types defined in XSD.
+XSD - XML Schema Document.
+whatever custom data types we need for that webservice, we would define them in XSD.
+These custom data types(request and response) are used to define messages.
+These messages are attached to operations under a port type element.
+
+WSDL (tmpb)
+----
+Web service definition language used to describe web services. It specifies the location of the service, the methods of the service, using these major elements.
+<types> - define the XML schema data types used by the web service.
+<message> - define the data elements for each operation.
+<port type> - describes the opertions that can be performed and the messages involved.
+<binding> - defines the Protocol and data format for each port type.
+
+
+REST
+----
+
+In the REST api we have
+*CREATE - create a resource
+*POST  - create a new resource
+*DELETE - remove a resource
+*GET   - retrieve a resource/ list of resources
+*PATCH (PUT) -  Update a resource.
+
+In the rest API we use query parameter to put a filter on teh search results.
+Difference between template and query parameter
+
+the template parameter are placeholders that get replced with specific values. They are usually the Primary keys of the data.
+ex: 
+URL: /users/{userId}
+if we want a certain user we can do /users/123 - indicates we are looking for user 123

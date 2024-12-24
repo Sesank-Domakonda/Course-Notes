@@ -1,0 +1,40 @@
+AWS cloud
+---------
+There are 2 ways we can access the cloud.
+* AWS Management Console - Graphical way to connect to various AWS resources, their configuration, modification etc. It is simple to use and does not require knowledge of scripting.
+* AWS CLI - Usually, the script provides the flexibility to manage multiple AWS resource, infrastructures easily.
+
+
+VPC:
+----
+=> We are creating Virtual Machines in AWS to setup our infrastructures.
+=> We will use 3 services to create a Virtual Machine.
+* EC2
+* EBS
+* VPC
+
+All the services in AWS can be catgorized into 2 types
+* AWS Managed Services (SaaS)
+* Customer Managed Services (IaaS and PaaS)
+
+VPC is one of the customer managed services in AWS.  Say teh project has App server, Web server, S3, RDS etc. 
+we shouldn't allow everyone to access everything instead they should have some restrictive access like the general publuc should only access the app server to view the portal/page.
+
+Even while creating the EC2 instance we have a default VPC attached.
+
+=> We divide the VPC into parts called as subnets (sub networks). We put our resources in the subnets.We have two types of subnet
+1)Private subnet : Not internet connectivity (DB is usually put here so no one can access it)
+2)public subnet : We have internet connectivity (appserver is put in the public subnet)
+
+
+Internet Gateway:
+----------------
+=> We need to provide internet connection to the VPC. We use internet gateway to do that.
+
+Route table:
+------------
+=> Every subnet will have its own route table. It is used to specify where the requests go to.
+
+Internally private subnet can communicate with the public one.
+
+Say we have an EC2 in the private subnet and we want to access the git. We can make this possible by using NAT gateway. here the incoming traffic is not allowed only the outgoing is permitted.

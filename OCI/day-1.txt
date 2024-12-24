@@ -1,0 +1,72 @@
+=>Realm
+--------
+=>It is a logical collection of regions and are isolated from each other.
+=>Your tenancy exists in one realm and can access the regions in that realm.
+
+=>You cannot access regions that are not in your realm.
+
+=>OCI has multiple realms including comercial, government and dedicated realms.
+
+
+
+OCI Fundamental Blocks
+======================
+
+https://drive.google.com/file/d/1b-e1En-WUZzBIfBRCZUdnhB3vs8ew5He/view?usp=drive_link
+
+We can subscribe to more than one region why is that?
+Because of the Availability domain.
+
+Availability domains: These are the physical data centers in a region.
+
+->specific services in specifc regions: Since all the services are not available in all the regions. We subscribe to more than one region.
+->disaster recovery: when a data center crashes then having the data backup on the other region will help.
+->Compliance: Some regulations require data to be stored in specific locations.
+
+
+Fault domain: 
+-------------
+- They are seperate areas within a data center.
+- if something goes wrong with one area (like power failure or hardware issue) the problem won't affect the other areas.
+
+https://drive.google.com/file/d/1LRNuTHFMY5hokgbjkSMjuSzrLh4DvPEl/view?usp=drive_link
+
+
+OCID - oracle identifier
+ocid1.<Resource_Type>.<Realm>.[<Region>.<Future_Use>].<Unique_Id>
+ocid: Commercial Realm
+
+
+Domain: (click on hamburger -> go to Identity and Security -> find the domain)
+------
+=> It is a container for users and groups within in cloud.
+ex: if we want to add a set of users/group with common functionality like testing/dev we can add all these users to a domain.
+
+
+Compartments: (Click on hamburger -> click on the Identity and Security -> click on the se)
+--------------
+-> Its a logical container used to organize and manage cloud resources within a cloud account.
+
+Tenancy:
+---------
+-> Its a way of organizing cloud resources where customers either have their own seperate space (single tenancy) or share resources with others (multi tenancy).
+-> Its overall arrangement of how resources are allocated and managed for different users or organization.
+
+check tenancy vs compartments
+
+IAM services
+------------
+Authentication - Veifying a user on who the user says the they claim to be.
+Authorization - Permission a user has to navigate around.
+
+Creating an Instance (Click on hamburger -> Developer settings ->Under application integration-> click on Integration )
+====================
+
+=>We can also create an instance by going into the Compute and then select the region and availability domain.
+
+Note: Difference between integration instance vs compute instance
+Integration Instance: Designed to run integration flows, which automate and process data b/w applications/
+
+Compute Instance: It is a VM that provides the raw computing power to run applications, host websites etc.
+
+

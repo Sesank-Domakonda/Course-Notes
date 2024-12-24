@@ -1,0 +1,10 @@
+for the mapping we can also see the XSLT by
+click on the mapping -> Find the <> button on the top and click it.
+
+
+If we Activate the integration in 
+* Production then we will be able to see the integrations for a span of32 days. (only integration activity)
+* Audit then instance will be available for 8 days and the wire payloads of trigger and invoke will be shown in the activity stream.  (payloads + integration activity).
+* Debug - Integration activity + payloads at every nodes.
+
+

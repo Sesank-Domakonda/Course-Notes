@@ -1,0 +1,195 @@
+S3 - Simple Storage Service
+---------------------------
+=> S3 is an object based storage. Using EBS we can only store 16TB data. But exceeding this limits S3 can be used.
+=> S3 is an Object based storage. We cannot attach S3 to EC2 instance but can access data in S3.
+
+=> we can't install OS, DB in S3.
+=> S3 supports static web hosting.
+=> In S3 we will store data in buckets.
+Bucket - container. 
+Object - files to be stored    (Every object can be upto a max size of 5TB)
+Key - is the name of the object
+
+=> S3 service is global but buckets are regional. Bucket names are universal. (Suggested to create a bucker with your company name or project name).
+=> Max no of buckets you can create in S3 is 100.
+=> We cannot create buckets inside buckets.
+
+
+Creating a bucket --> S3 --> Click on create bucket option --> Choose bucket type (general purpose / directory) and bucket name --> Choose the object ownership (Access control list enabled or disabled) --> Check or Uncheck the public access for this bucket --> click on create button
+By default the object will be private but we can make them public.
+
+
+Versioning 
+============
+=> If we want to store multiple versions of the same file for backup purpose we go for versioning.
+=> versioning is available at the bucket level and will appply at objects available in that bucket.
+
+Delete Marker
+============
+=> delete marker is a signal that shows an object has been deleted in a special type of bucket that keeps track of versions.
+=> When you delete an object without specifying a version ID, S3 doesn't permanently delete the object
+ex: If you delete an object named example.txt in a versioning-enabled bucket, S3 creates a delete marker with the same key name
+
+we can get back the original file by deleting the delete marker.
+
+Storage classes
+===============
+=> There are several types of storage classes in S3. 
+ex: glacier frequently accessed, glacier infrequently accessed.
+
+Standard Access (Frequently Accessed)                                           Standard Infrequently Access (IA)
+--------------------------------------                                          --------------------------------------
+- Used for frequently accessed data                                              - Used for in-frequent data access
+- This is default storage class                                                  - Cheaper than FA
+- It is used for regular purpose( websites, photos, videos)                      - Retrieval charges apply
+- No retrieval charges
+
+glacier -- Used for historical data.
+-------
+
+Intelligent-tiering -- data with unpredictable access pattern.
+------------------
+
+
+
+=> We can move the object from one storage class to another storage class using Life cycle management.
+Cross Region Replication (CRR) - Move data to different regions (Mumbai ---- Dallas)
+Same Region Replication  (SRR)-  Move data to same region (Mumbai ---> Mumbai)
+
+
+Encryption
+=============
+Encryption is used for security. It is done in 2 ways.
+=> In Transit : Encryption while data is moving/flow HTTPS.
+=> Data at Rest: Encryption while data is at rest.
+
+AWS S3 has 3 types of encryptions
+----------------------------------
+SSE - s3 serer-side encryptions (AWS managed key)
+SSE - KMS (AWS KMS key)
+SSE - C (Customer Provided key)
+
+Client-side encryption
+----------------------
+(should be handled by customer, how to reach aws is our headache)
+
+=> When we upload any object into S3 bucket then new URL/endpoint will be generated for that bucket.
+ex: https://buckername.domainname.objectname
+
+=> we can configure 'pre-signed URL' for objects in s3. Presigned-URL is used for Limited access (URL will be valid for limited time).
+
+
+Transfer Acceleration
+========================
+
+=> Say we have buckets across many regions and we want to upload data to the bucket. Using the local network it takes lot of time to upload the data so AWS
+offers Transfer acceleration.
+
+=> So we can connect witht he AWS internal Network so the data can be uploaded quickly.
+
+
+Uploading files into the bucket
+===============================
+=> After creating the bucket we click on the Add files / Add folder button
+2) We can see the details of destination, Bucket versioning, Default encryption type, Object lock etc.
+3) Under permission we can specify the storage class (Standard, Intelligent tiering etc), Server-side encryption(protects data at rest)
+4) click upload button
+
+
+To upload a static website we can follow the steps:
+1) create a bucket
+2) select the bucket and under the properties section we can scroll to the bottom and find the static website hosting, click on edit and enable the static web hosting.
+Later upload the files
+
+4) A static website hosting page will be opened ---> now click on enable radio button --> name the index.html and error.html files
+5) click on enable and we can choose the hosting type 
+   host a static website  -- Then the URL will be the end point generated from the bucket
+   Redirect requests for an object -- redirects to another bucket or domain
+
+6) save the changes
+
+5) go to permission on the top --> in the bucket policy click on edit --> paste the following policy
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::ashokit.org/*"
+            ]
+        }
+    ]
+}
+
+6) After everything has been configured save changes. --> Go to the Objects --> Upload the files
+
+we can find the link of the static website hosted (click on bucker ---> go to properties on the top ----> scroll to the bottom of the page --> we can find the link there )
+
+S3 Buckets have all the features.
+Scalability: Increase and decrease resources based on demand.
+Availability: when we can access the resource.
+Durability: How long can we store.
+
+
+Select a bucket ---> on the top find all the settings (permission, metrics, properties, management etc.)
+
+
+
+
+Route 53
+=========
+
+=> If we take any application in real time it will be deploysed in multiple servers. We launch it to balance the load.
+Load balancer distributes the load of the incoming requests.
+
+The link to access the application will be like url:http://alb.mylbr.amazonaws.com/ which is not suggested to be sent to the users.
+
+=> Using Route 53 we can give a good domain name like facebook.com which can be accessed by the users.
+
+Every application has a domain like
+
+facebook.com                             fb-application
+                                        ip: 192.168.3.1
+
+=> when a user tries to access the domain name the user should be redirectied to the server ip. We have to map the domain name to the server ip.
+So route 53 is used to do this when a user access domain name in browser then Route 53 will route that request to server IP where the app is running.
+
+http://sesankd.org.s3-website-us-east-1.amazonaws.com ---> this URL should be mapped to a domain name so we have to map this to a domain name.
+
+Hosted zone
+-----------
+=> Public Hosted zone - contains record that specify how to route traffic on Internet (public domain names)
+=> private Hosted zone - contains records that specify how you route traffic within one or more VPCs (private domain names)
+
+
+DNS Mapping - The process of mapping domain name with the server IP .
+-----------
+
+before mapping we have to purchase a domain name. In AWS, domain charges depends on your business.
+.in, .com, .info, .edu.
+
+
+Procedure to configure DNS mapping
+---------------------------------
+1) register a domain using route53 domain option.
+2) go to billing dashboard and pay the bill amount.
+3) create Hosted zone -- It is a container that holds information about how we want to route the traffic for a domain and its sub domain.
+give the domain name (sesank.org), select public/private zone
+
+4)click on create record option ---> don't enter any record name --> Select record type from drop down (A - routes traffic to an IPv4 address and some AWS resources)  ---> in the route traffic to description box enter the ip address or toggle the alias
+here we can select where we can redirect the traffic to (load balancer/s3 bucket) --> select the region
+
+record is nothin but the mapping done from the server to the dns name.
+
+
+=> Whenever we register a DNS we get named servers and a hosted zone.
+=> when we click on a domain name we see the named servers.
+named servers -> they route the traffic to the actual domain.
+
+read more on named server.
+

@@ -1,0 +1,204 @@
+XML 
+--------
+X- extensible (can be extended)
+M- Markup	  (Making use of tags)
+L -language	  
+
+=>The purpose of XML is to transfer data between 2 application for communication.
+=>XML is also radable bu bumans
+=>XML is platform independent.
+
+
+
+<?xml version="1.0" encoding = "UTF-8"?> - prolog
+<friendslist>                            - Root
+	<friend gender = "male>              attributes (gender = "male") they must be quoted.
+		<name> Alex </name>
+	</friend>
+	
+	<friend>
+		<name> Sesank </name>
+	</friend>
+	
+</friendslist>
+
+
+XML Namespace
+--------------
+
+ex:
+<?xml version ="1.0" encoding = "UTF 8.0"> -- prolog
+<foodlist>                                 -- rootelement
+	<fooditem>
+		<name>Rajma</name>                 
+		<cost>10</cost>
+	</fooditem>
+	<fooditem>
+		<name>Chole</name>
+		<cost>20</cost>
+	</fooditem>
+	<fooditem>
+		<name>Dal Makhni</name>
+		<cost>20</cost>
+	</fooditem>
+</foodlist>
+
+prolog - it is an optional statement. First line of document.
+Root element - first element in the XML document.
+
+Attributes - They describe the tags
+<fooditem type="italian">
+	<name>Pasta</name>
+	<cost>20</cost>
+</fooditem>
+		
+
+
+XML namespaces
+===============
+
+=>Say we have to write the list of names.
+<namelist>
+    <names>
+        <name>Sesank</name>
+        <name>Kasyap</name>
+        <name>Vasundhra</name>
+    </name>
+
+    <names>
+       <name>Sesank</name>
+        <name>Kasyap</name>
+        <name>Vasundhra</name>
+    </names>
+
+</namelist>
+
+But there is a conflict with the names tag as it is duplicated. So we make use of prefix.
+<namelist>
+	<e:names xmlns:e = "https://www.sesank.com/employees">
+		<e:name> Sesank </e:name>               ----- we have given the e prefix to it
+		<e:name> Kasyap </e:name>	
+	</e:names>
+	
+	<f:names xmlns:f = "https://www.myfamily.com/members">
+		<f:name>Narayana</f:name>				----- we have named it with the f prefix.
+		<f:name>Vasundhara</f:name>
+	</f:names>
+</namelist>
+
+but whenever we use the prefix it is mandatory to make use of the namespace.
+xmlns:prefix = "URL"
+
+Note: We gave the namespaces at the child level. If we want don't want to put them at the child level we can put the nameurl at the root level.
+
+<namelist xmlns:e = "https://www.sesank.com/employees" xmlns:f = "https://www.myfamily.com/memeberss">
+	<e:names>
+		<e:name>Sesank</e:name>
+		<e:name>Kasyap</e:name>
+	</e:names>
+	
+	<f:names>
+		<f:name>Sesank</f:name>
+		<f:name>Kasyap</f:name>
+	</f:names>
+</namelist>
+
+=>For the default namespace we can declare at the parent element we don't need to have the prefix.
+<namelist >
+	<names xmlns= "https://www.sesank.com/employees">
+	
+		<name>Sesank</name>
+		<name>Kasyap</name>
+	</names>
+	
+	<names xmlns= "https://www.myfamily.com/memebers">
+		<name>Sesank</name>
+		<name>Kasyap</name>
+	</names>
+</namelist>
+
+
+XML DOM (Document Object Model)
+===============================
+
+                                         foodlist
+								           |
+     ------------------------------------------------------------------------
+     |																		|
+	Fooditem ->italian                                                  Fooditem -> type american
+      |																		 |
+ ----------------														------------			
+ |	  			|														|           |		
+name           cost													   name        cost			
+ |              |														|			|
+Pizza			$10 												  Burger        $8
+
+
+=>DOM providesa standard way of accessing/modifying documents like XML/HTML.
+=>Languages like JS can use this DOM to access/modify elements.
+
+
+
+Xpath - query language to traverse through the XML document
+============================================================
+<foodlist>                                We can use xpath to query the cost of noodles food item.
+	<fooditem type="Indian">
+		<name>Rajma</name>                 
+		<cost>10</cost>
+	</fooditem>
+	<fooditem>
+		<name>Chole</name>
+		<cost>20</cost>
+	</fooditem>
+	<fooditem>
+		<name>Dal Makhni</name>
+		<cost>20</cost>
+	</fooditem>
+</foodlist>
+
+=>There are two ways to query
+ *Absolute path
+ *Relative path
+
+In the absolute path we give the full path. / - indicates the complete document.
+/foodlist/fooditem[@type = 'Indian']/cost
+
+Relative path - start with //
+//fooditem[@types = 'chinese']/cost
+
+XSL and XSLT for XML   
+======================
+XSL(extensible stylesheet language)
+
+=>XSL is a styling language for XML. just like css for HTML.
+=>In the XSL file we create XSLT elements. These XSLT elements will covert XML to another formats like HTML.
+
+
+XSD  (XML Schema Definition)
+============================
+=>When  we have all the xml structure like syntax, formatting correctly then it isvalid.
+=>The validity is given by the xsd.
+
+<class>
+	<student>
+		<firstname>Graham</firstname>
+		<lastname>Bell  </lastname>
+		<age>20</age>
+	</student>
+	
+</class>
+
+
+=>we can validate it with the XSD.
+
+<xs: schema xmlns:xs= "http//www.w3.org/2001/XML Schema">
+ <xs:element name = "class">
+	<xs:complexType>
+	  <xs: sequence>
+	  
+	  
+=>XML intro
+=>XML namespace
+=>XML DOM
+=>Xpath
+=>XSD 

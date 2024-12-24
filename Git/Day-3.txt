@@ -1,0 +1,58 @@
+Git Diff
+---------
+*git diff
+=>This is used to view changes between staging area and the working directory.
+=>It is used alongside with git status/git log.
+
+
+Explanation to the output of diff
+==================================
+->It starts with the file comparison
+->Metadata of the files.
+->->Here if we change thousands of line then the command then displays the changes for each chunk.
+
+*git diff HEAD /git diff HEAD [file_name]
+--This will compare the difference between the working directory and the last commit.(both staged and unstaged)
+--We can narrow down the comparison a specific file when we use the git diff --HEAD style/main.css.
+this will now give the difference between the files now.
+
+*git diff --staged
+it gives the difference between the staging area and the recent commit.
+
+*git diff branch1 branch2
+--it compares the difference between two branches for the recentmost commit.
+
+*git diff commit1 commit2
+- it compares the difference between two commits.
+
+
+Git Stashing
+-------------
+
+=>Git provides an easy way to stash the uncommitted changes(staged/unstaged) so we can return to them later, without making unnecessary commits.
+
+*git stash/ git stash save - helps to save changes that are not yet ready to commit.
+*git stash pop - removes the most recently stashed change in your stash and reapply them to the working copy.
+
+activity: create a new git rep
+		
+master								alternate
+file1.txt							file2.txt
+this is the first file.				this is file2.txt
+
+now switch branch to alternate and then create a fiel2.txt and put the above text in it.
+
+Now stash the commit with git stash save and do two things
+
+on alternate branch do git stash pop
+on master repeat the above activity and then use git stash pop.
+
+*git stash apply - this is same as pop but the thing is that it doesn't pop the stash but will remain there and can be applied to multiple areas.
+
+
+Multiple Stashes
+-------------------
+we can have multiple stashes in GIT by repeatedly usign the git stash save/git stash.
+
+*git stash list - gives the list of stashes.
+*git stash apply <Stash_id> - this will give a particular stash.

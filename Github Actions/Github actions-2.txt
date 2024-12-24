@@ -1,0 +1,66 @@
+Events -- these trigger the workflow.
+-------
+=>Most of the events are related to repository such as push, pull , merge etc.
+=>There are others which are not repo related like 
+scheduled - be schedules on some time
+repository_dispatch - REST API request triggers workflow
+workflow_dispatch - manually trigger workflow
+workflow_call - called by other workflow
+
+=> Activity types and filters give a more detailed control over when a workflow will be triggered.
+
+
+=>Whenever we want to start declare an event such as push then only the workflow gets triggered whenever we push the code to any branch.
+=>But when we want to specify a specific push to a branch then we can use the event types. like initiate a workflow only when the code is pushed to main branch.
+
+=>We have to use it in a different way.
+
+name: workflow            name: workflow
+on:                       on:
+  pull_request:             pull_request: 
+    types: opened             types: opened
+
+
+Event Filters: Control when to trigger the workflow based on branches, paths, tags, etc.
+Activity Types: Specify what kind of activity within an event (e.g., opened, closed) triggers the workflow.
+Analogy:
+Think of event filters as the scope of when to watch (e.g., only on the main branch), and activity types as the specific actions to react to (e.g., only when a pull request is opened).
+
+
+Events Filters
+----------------
+=>They specify which actions within the event should trigger the workflow.
+
+like for push event every push shouldn't trigger a workflow but just the push into the main branch should do.
+
+we can checkout the documentation for the specifics.
+
+ex:
+name: first_ef
+on:
+  push:
+    branch:
+      - main   
+      - dev-* // indicates that any branches followed by dev- like dev-new, dev-old etc.
+
+Cancelling and Skipping workflows
+----------------------------------
+=>By default workflows get cancelled if jobs fail.
+=>By default, a job fils if at least one step fails
+=>we can also cancel the workflow automatically.
+
+By default, Pull request based on Forks do NOT trigger a workflow since everyone can fork & open pull requests. Malicious workflow runs & excess cost could be caused.
+
+Skipping
+=========
+->for ex: if a wf runs when there is a push event but we want to not execute workflow for a specific push event then we can also skip workflow.
+-> we can do that by adding an appropriate commit message as in the documentation.
+->Skip with proper commit message.
+ex: in the commit message we can add [skip ci] to skip the execution of workflow/
+
+https://drive.google.com/file/d/1f1ZTlClgvMFKW7aqYzOP6G5kFXgq7Kir/view?usp=drive_link
+
+documentation
+https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+
+

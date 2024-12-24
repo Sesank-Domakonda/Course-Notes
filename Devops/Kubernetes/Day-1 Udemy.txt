@@ -1,0 +1,87 @@
+Kubernets -- It is a framework which helps with container deployment independent of cloud.
+
+Problem with manually deploying with manually running servers
+---------------------------------------------------------------
+=> Containers might crash/ go down and need to be replaced.
+=> We have to manually monitor and start/stop containers if there is a problem.
+=> We might need more container instances upon trafiic spikes.
+=> Incoming traffic should be distributed equally.
+
+
+Why Kuberetes?
+
+=> AWS uses ECS to check the container health + automatic re-deployment
+=> ECS also helps us with auto scaling. (increase the no of container instances dynamically to leverage the incomign traffic)
+=> Incoming traffic should be distributed equally.
+
+Problem with using a cloud managed service is it locks us into that service.
+* you need to learn about specifics, services adn config options of another provider if you want to switch.
+
+
+
+Kubernetes
+----------
+=> It is an open-source system for orchestrating container deployments.
+* Automatic deployment
+* Scaling and Load balancing
+* Management
+                              some provider - specific stup or tool
+Kubernetes Configuration  ------------------------------------------>  Any Cloud Proider or Remote machine (could also be your own data centers)
+(i.e desired architecture)
+          |
+number of running containers etc.
+
+=> with the kubernetes Configuration files we can specify all the necessary details to any cloud provider supporting kubernetes or any machine installed with kubernetes software and this file is essential for managing and deploying the application 
+within the kubernets environment. 
+
+=> Kubernetes is like a Docker-compose for multiple machines.
+
+
+Core Kubernets Concepts & architecture
+--------------------------------------
+
+POD - It is the smallest unit in Kubernets model you can create or deploy. It represents the running instance of a running process in cluster.
+A POD can hold a single or multiple containers.
+
+Worker Node: Worker nodes run the containers of application. "Nodes" are you machines/ virtual machines.
+Kube Proxy - It is used to control the network traffic of the PODS on the worker nodes.
+             wheather these PODS can reach the internet and the container reach the outside world.
+
+Master Node: Controlls the worker nodes, PODS etc. 
+
+All together above is called as a cluster. Now the master nodes sends instruction to cloud provider API to tell the cloud provider specific resources to replicate the cluster end state architecture.
+
+
+   What Kubernetes will do?                                               What you need to do?
+=> Create you objects (Eg. Pods)  and manage them                        => Create the cluster and the Node Instance(Worker + Master nodes)
+=> Monitor Pods and re-create them, scale PODS etc.                      => Setup API Server, Kubelet and other kubernets services/software on Nodes.
+=> Kubernetes utilizes the provided resources to apply configuration     => Create the (cloud) proider resoures that might be needed (Ex: Load Balancer, File systems)
+                                                                      
+
+Whats happening inside th e worker node?
+=> Worker node: It is a compute/ EC2 instance. It is managed by a master node.
+=> POD: Hosts one or more application containers and their resources (volumes, IP, run config)
+=> Pods are created and managed by kubernetes.
+
+kubelet: communication between Master and worker node.
+
+
+Master Node
+-----------
+API Server : API for the kubelets to communicate
+Scheduler: watching for new pods selects worker nodes to run the on.
+Kube controller manager : Watches and controls number of pods and more.
+Cloud controller manager - like kube controller manager but for a specific cloud provider: knows how to interact with cloud provider resource.
+ 
+
+Important Components
+--------------------
+
+Cluster: A set of node machines which are running the containerized application (worker nodes) or control other nodes (master nodes)
+Nodes: Physical or virtual machine with a certain hardware capacity which hosts ons or multiple Pods and communicates with the cluster.
+Master node: Cluster Control Plane, managing Pods across worker nodes
+Worker node: Hosts PODS, runnign APP containers + reources
+PODS: pods hold the actual running app containers + their required resources (volumes)
+Containers: Docker containers
+Services: A logical groups of Pods with a unique , POD and contaienrs independent IP address.
+

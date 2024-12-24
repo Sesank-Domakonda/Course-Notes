@@ -1,0 +1,216 @@
+=> Shell is an interface between user and kernel.
+=> Kernel will interact with hardware and will perform operation.
+
+There are several shells available in Linux such as Bash shell, Cshell, Tshell.
+Most commonly used and powerful shell is Bash.
+
+
+whenever we enter a command shell wiill check its validity and give it to the kernal in an understandable format and gets back the reposne and give it back to the user.
+
+cat /etc/shells - gives all the shells available
+echo $SHELL - gives the default shell.
+
+
+Scripting - Process of executing the commands together.
+script files will have .sh extension.
+
+
+Write and execute first shell script in Linux
+-----------------------------------------------
+1) create a file with a name task.sh
+2) Edit the file using vi editor and add below commands then save and quit.
+3) Add execute permission for the file using 'chmod' command
+4) Execute the file using below command.
+                  $ ./task.sh
+
+
+echo - used to read the data from console.
+read - read the data from console.
+
+ex: test.sh
+echo "enter the name"
+read name
+echo echo $name
+
+
+At the top of a shell script, we specify #!/path/to/shell, called a shebang. This indicates which shell should execute the script.
+
+Concepts of Shell
+=================
+
+1)Variables
+2)Functions
+3)Control Statements
+4)Loops
+
+
+Variables
+----------
+=> Used to store data.
+=> In shell we declare variables with Capital letters and only _  is special character is used.
+
+There are 2 types
+* Environment variables : Used by OS , we can call these variables as system variables. env command get all the environment variables with env.
+* User defined variables : Based on requirement we will define some variables called as "User defined variables"
+
+Variable scope
+-------------
+1) Session scope : Terminal scope. (limited to a terminal)
+2) user scope
+3) system scope
+
+Session scope
+-------------
+=> Session scope means terminal scope
+=> If we close a terminal then variable will be removed.
+
+User scope
+----------
+=> User scope means variables will be available for particular user account.
+=> To set variables for specific user we will use .bashsrc file.
+
+System scope 
+------------
+=> System scope variables will be available for all users in that machine.
+
+
+
+Command Line Arguments
+----------------------
+=> The Arguments we will pass while executing script file are called as command line arguments.
+ex: ./welcome.sh linux is easy (executing a command with arguments).
+
+welcome.sh 
+echo $#  // gives out the numbere of command line arguments
+echo $0  // gives the name of the file
+echo $1  // gives the first argument 
+echo $2  // gives the second argument
+echo $3 // gives the third argument  
+
+
+Comments 
+----------
+Comments enhance the readability of the code.
+we can comment using #.
+
+A = 2
+B = 3
+C = $(($A + $B))
+
+Single line comments start with #.
+
+Multi line comments can be declared as 
+<<COMMENT
+  //some text
+COMMENT
+
+
+Control Statements
+------------------
+
+if else                 if elif  
+------                  -----
+
+if [condition]           if [condition]
+  then                     then 
+    echo stmts               echo stmts
+else                     elif [condition]
+    echo stmts              then 
+fi                            echo stmts
+                         else
+                              echo stmts
+ex: 
+echo "enter the age"
+read age
+
+if ["$age -ge 18]; then
+    echo "You are eligible to vote";
+else
+    echo "You are young :c "
+
+fi
+
+Case Statements:
+---------------
+This is used to check multiple statments.
+
+x = "KIWI"
+case $x in
+   "APPLE")  echo Good morning!;;
+    "BANANA") echo Good noon!;;
+    "MANGO")   echo Good evening!;;
+    "PINEAPPLE")echo Good Night!;;
+esac
+
+
+Loops 
+=====
+
+for Loop  - Used for looping in a range
+---------
+
+for ((cond1; cond2; cond3))               ex: for((i =1; i<=10; i++))
+do                                            do
+   echo Statements                              echo "$i"
+done                                          done
+
+
+While Loop - Used for looping until the condition os satisfied or when we don't know how many times do we need to loop for.
+----------
+
+i=10;
+while [ $i -ge 0]
+do
+    echo "$i"
+    let i--;
+done
+
+
+Until loop - Unitl loop stops when the condition is false.
+----------
+Difference between while and Until is that while stops when the condition is true but until stops when the condition is false.
+
+count=10
+i=0
+
+until [ $i -ge $count ];
+do 
+    echo "$i"
+    let i++;
+done
+
+
+
+Functions
+----------
+=> Function is used to perform some action.
+we declare a function with the function keyword.
+
+function <name>{
+}
+
+calling a function
+<name_of_function>
+
+
+Task : Write a shell script which takes two numbers as input and displays which number is greater.
+
+
+How to install softwares in Linux?
+yum command is used in RHEL Linux
+apt command is used in Ubuntu OS
+
+How to check the Linux version?
+ans: uname -v
+
+How to check diskspace in Linux?
+ans: dfn
+
+How to check status of particular service in Linux?
+$ sudo systemctl status apache2
+$ sudo systemctl status mysql
+
+How to monitor linux in OS?
+htop
+
+ 

@@ -1,0 +1,201 @@
+Github actions
+------------------
+What are Github actions?
+
+Its an automation service by Github with workflows which automates all kinds of repo-related actions.
+
+CI//CD - Continuous Integrationa and Continuous Deployment.
+CI: Code changes are automatically built, test and merged with the existing code base.
+CD: After integration, new app or package versions are automatically published.
+
+
+=>Github actions has
+-Workflows
+-Jobs
+-Steps
+
+Workflows are added to Github repos.
+
+=>To add the workflows in the repository we should add the .github / workflows and create the workflow with .yaml extension.
+.github/workflows
+
+=>Triggers: These define the events  that cause a workflow to run.
+
+Workflows  -- Its a yaml file that specifies the automated process you want to run. 
+----------
+- made of jobs
+- can contain one/more jobs 
+- triggered upon events
+
+jobs 
+-----
+=>Contains one/more steps
+=>Jobs define a runner.
+So these runners are servers on which the jobs run on. So these runs-on is crucial coz the jobs can be run on differernt environment such as Linux/Ubuntu/Self-hosted runner.
+=>We can make the jobs to run in parallel/ sequential or Conditional.
+
+Note: The jobs we define runs on the machines owned by github/ our servers but not in the repository.
+
+
+Steps
+---------
+=>Execute a shell script or an Action.
+=>Can use custom ot third-party actions.
+=>Can be conditional too.
+
+Syntax:
+--------
+name(name of workflow):
+on: (tell what should trigger the workflow)
+
+jobs:
+first-job:
+  runs-on:ubuntu-latest
+  steps:
+	- name:first_step
+	  run: echo "Hello World"
+	 
+	- name:second_step
+	  run: echo 
+
+Actions
+------------
+=> Actions are reusable pieces of code that can be used in workflows.
+=> Actions can be custom or third party. and can be used in steps.
+
+=>ex: actions/checkout@v2 is an action which is used to clone the repo code into the virtual environment(runner) where the jobs is being executed.
+ - It is necessary when the wokflow needs access to the repo's files
+
+=>we use the keyword 'uses' to use the actions instead of run in steps.
+=>some actions require some configuration which can be provided with 'with' keyword.
+                           or
+  some actions need the some specific parameters which is passed through the with keyword.
+  like 
+
+  - name: node js
+    uses: actions/setup-node@v2 - this indicate use the action version2
+    with: 
+      node-version: '14' - this indicate the node version to be used
+
+so we if we need to check if an action needs some software like node js we can do it inside it with uses.
+
+for example: if we are running the job in a specific environment like the ubuntu and need to check if nodejs is installed then we can see that 
+with the uses inside the actions.
+
+name: Test
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps: first step
+      -name: Getcode
+       uses: actions/checkout@v3
+
+      -name:Install NodeJS
+       uses: actions/setup-node@v3
+       with:
+          node-version: 18
+
+
+=>we can add the multiple jobs this way
+
+name: first-workflow
+on: push
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+
+    steps: 
+     - name: get code
+       uses: actions/checkout@v2
+     
+     - name: install node js
+       uses: actions/setup-node@v3
+       with:
+        node-version: 20
+      
+     - name: install deps
+       run: npm ci
+
+     - name: run tests
+       run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: get code
+        uses: actions/checkout@v3
+      
+      - name: install nodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      - name: Install deps
+        run: npm ci
+      
+      - name: run tests
+        run: npm test
+
+
+when pushed to the github we can see these jobs runs in parallel.
+
+=>To run jobs one after other we use the keyword "needs".
+
+ex: jobs: 
+      needs: sample #give the sample name here, we can also do 
+
+needs : [test1,test2]
+
+jobs:
+	job_name:
+		needs:
+		runs_on:
+
+now when the first one fails then the second doesn't gets executed.
+
+
+Having Multiple Triggers
+------------------------
+=>We can add many events to the triggers like:
+
+name: some wf
+on: [push,workflow_dispatch]
+
+this will now have mutiple triggers 
+
+Expressions and Github Objects
+-------------------------------
+
+Context-Objects: These are the built in variables by Github that will give you access to information about the workflow.
+ex: github, github.ref
+
+Expressions: Pieces of code used to evaluate or compute a value dynamically in the workflow.
+
+why are expressions used for?
+used
+
+syntax: ${{}}
+
+ex:
+name: workflow
+on: push
+
+first-job:
+  runs-on: ubuntu-latest
+  steps:
+    - name: first step
+      run: echo "${{toJSON(github)}}"
+
+
+Module Summary
+---------------
+https://drive.google.com/file/d/1879zv3L7Rn1jQlIcnV9VjtHBW6tgHCSx/view?usp=drive_link
+
+
+documentation
+https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
+

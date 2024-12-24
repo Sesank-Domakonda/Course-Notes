@@ -1,0 +1,59 @@
+Version Control
+----------------
+-Software that tracks and manages changes to files over time.
+-Allow users to revisit early versions, compare changes between version, undo them.
+
+Git vs Github
+-------------
+Git- is the vcs that runs locally on machine.
+Github - It is a service that hosts Git repos in the cloud and makes it easier to collaborate with other people.
+
+Why Gitbash?
+-Bash is a cli interface that is widely used by devs.
+-It is default shell for linux and mac. Git was designed to run on a Unix-based interface.
+
+- Windows comes with a different default command line interface called Command promt that is not unix based.
+
+- But gitbash is a tool that will gave a bash experience on a windows machine. 
+
+Configuring Git
+---------------
+
+=>To configure the name that Git will associate with your work we use 
+
+*git config --global user.name "<user-name>"
+*git config --global user.name - git pushves the usernmae configured
+*git config --global user.email 
+
+
+Git repo
+---------
+=>A git repo is a workspace which tracks and manages files within a folder.
+=> Anytime we want ot use Git with a project we need to create a repo.
+
+*git status - gives info on the current status of repository and its contents.
+*git init - it initiates a new git repository
+
+when we initialise a new repo with git init then we will get a hidden file with .git extension.
+
+*git add . - adds the files to the staging area.
+*git commit - git commit command is used to commit changes from staging area.
+*git log - it displays the commit history of repo and saves details like 
+author, names, dates etc.
+
+*git commit --amend - suppose we forgot to include some file in the commit then we can add this file to commit with this command.
+
+git commit -m "message"
+git add forgotten file
+
+git commit --amend
+
+*git commit -am "message" - this will directly commit all the files without the need of staging them.
+
+Ignoring some files
+-------------------
+=>we can ignore some files without git tracking.
+=>we can do that with .gitignore.
+
+we can ignore files like 
+=> *.log -- it ignores all the log files

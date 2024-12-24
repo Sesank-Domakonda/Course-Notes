@@ -1,0 +1,48 @@
+What is a webserver?
+=> It is used to run web applications.
+=> In EC2 Instance we will install web server to run web applications.
+
+The process of taking code from devs and keeping it on webserver is called deployment.
+
+Proces to Install a webserver into the instance
+----------------------------------------------
+1) Login into AWS
+2)Create EC2 instance
+3)Connect to EC2 Instance with putty
+4)Install Webserver
+5)Keep files in /var/www/html
+6)Start the webserver
+7)Configure security groups for ec2 instance.
+
+
+Commands to install webserver 
+sudo yum update -y
+sudo yum install -y httpd
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo systemctl status httpd
+
+In the above activity we were able to put only one file in the webserver. So one project for one web server.
+
+As a devops engineer we will perform deployment activity.
+
+As people access the webserver then the load increases on the server. If the load increases server may crash.
+=> To reduce the load we will use "Load Balancer"
+
+Say we keep our applications in 2 servers.
+
+                                                      
+User-1                                                      Server-1   Instance-1 (IP: 3.109.133.17)
+User-2                                                       website
+
+                        ELB
+User-3                                                      Server-2   Instance-2 (IP: 3.189.123.15)
+User-4                                                      website
+
+
+
+AMI - Amazon Machine Image
+--------------------------
+=> It is a preconfigured system.
+
+Linux machines will have a default ssh protocol with 22 port.

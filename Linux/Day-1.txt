@@ -1,0 +1,162 @@
+Why command Line?
+-------------------
+=>Mastering Control over Machine
+=>Do repetitive tasks which takes ages for the GUI to do.
+
+
+Shell
+------
+=> It is a interface to an OS and HUman users which shows the OS services.
+=> The shell takes our commands and gives them to the OS to perform.
+=>It is given that name because it is like outer layer around the OS.
+
+Terminal
+----------
+=>A terminal is a program that runs a shell.
+
+The most common shell is Bash (Born again) shell.
+
+Help 
+=======
+
+1) man - used to get the help
+Usage: man <command>
+
+Reading the synopsis in the man document
+*[] - anything listed inside this is optional.
+
+facts: 
+*There are 9 sections of manual followed by types of page.
+*Most of the commands are found in the 1st section.
+
+2)type <command> - it indicates to which type does the command belong to.
+it can tell you if a command is a built-in shell command, an alias, a function, or an external command.
+
+
+3)help <command> - it gives
+
+
+
+Linux directory structure
+============================
+
+https://drive.google.com/file/d/1WxHON-O2N8N7Lyv1CYg3vCnKb4F9I2Ur/view?usp=drive_link
+
+Home - contain a home folder on thr system for each user on the system.
+ex: /home/sesank
+
+/ - represents the root directory
+~ - represents home directory
+
+
+4)pwd - it prints the working directory
+
+5)ls - list the contents of a directory
+  imp flags:
+   -ltr --> gives long format, "t" indicates the recently used files, "r"- reverse while sorting
+   -a-->   gives all the files including the hidden files
+
+6)cd - change directory
+
+note: in unix .. gives the parent directory and . gives the current directory
+~~~~~
+
+cd ..
+
+Relative paths & Absolute paths
+================================
+Relative path: This path specify the directory relative to the current directory.
+Absolute path: This path are the paths that start from the root directory (/).
+   
+7)touch - Used to create a new file from commandline.
+  Usage: touch <File_name>
+  If the file already exists then the file modification date will be changed.
+
+8) mkdir <file_name> - It will create a new directory.
+   -p - this flag is used to create nested direcory even if the parent doesn't exist.
+
+say we are inside the desktop and we write cd Parent/child - this will give an error as in the desktop we don't have parent
+bu tif we use it with p flag mkdir -p parent/child then we will get the required output.
+
+Naming Suggestions
+--------------------
+=>To use a space to name a file/folder/...
+ *wrap in double quotes
+ *Use \
+
+
+9) rm - Used to remove file
+   rm -r - used to remove directories and contents in it recursively.
+
+10) mv - move the files/directory into a directory.
+    Usage : mv <file> <destination>
+
+  ex: mv Cats/ Desktop/Pets/
+
+  Note: This command is also used to rename the files
+  ex: mv file1.txt file2.txt
+
+11)cp - Used to create cioies of files and folders.
+   Usage: cp <file/directory> <new_name.
+
+   Flags: we can also use -r to cpy files recursively
+
+
+Shortcuts 
+---------
+1)Ctrl + a - move to the beginning of the line
+2)Ctrl + e - move to the end of the line.
+3)Ctrl + l - clear the screen.
+4)Ctrl + f - to move the cursor forward one character at a time.
+5)Ctrl + b - to move the cursor backward one character at a time.
+6)Alt + f - To move forward one word at a time
+7)Alt + b - TO move one word backward at a time.
+
+12)history - used to retrieve all the commands used recently
+   It gives a list and if we want to use some command in the lisrt we can use !.
+
+
+
+Working with Files
+---------------------
+13)cat - is used to concatenate and print the contents of the file.
+   Usage: cat <file_name>
+
+    cat <file_name> - used to print the content of the file.
+    cat <file_1> <file_2> - it will not merge but will just print out the contents of 1st file followed by the contents of another.
+    cat > <file_name> - if the file exists then it will remove contents and puts a cursor on the top to write the contents/
+    cat >> <file_name> - this will search for the file and creates a new one if it does not exist and if file exists it will point to the end of th file to append the content.
+
+
+14)less - Displays the contents of a file, one page at a time. Used for the large files.
+
+
+15) tac - is reverse of cat command where the content of the file are printed in reverse.
+    Usage: tac <File_name>
+
+  https://drive.google.com/file/d/1IdS1s14tBNEaYGbr2HZs5GZsoJWaL70J/view?usp=drive_link
+
+
+16) head 
+Usage: head <file_name>
+  It will give the first 10 lines in a file
+
+17) tail
+Usage: tail <last_name>
+Flags: tail -n <file_name> - it will give the required n lines in a file
+       tail -f <file_name> - it will give the output as the file grows.
+It will give the last 10 lines in a file.
+ 
+      
+18) wc - gives the number of words,lines,bytes in a file.
+
+19)sort - used to putput the sorted contents of a file.(does not change the file but just gives the output).
+   Usage: sort colors.txt
+
+   -r flag is used to reverse the sorting.
+
+
+Nano
+-------
+=>nano is a simple text editor that can access right from terminal.
+Usage: nano <file_name>

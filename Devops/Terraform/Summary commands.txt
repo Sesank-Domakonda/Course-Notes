@@ -1,0 +1,47 @@
+=> terraform validate - checks the syntax of the terraform files and verifies that they are internally consistent.
+                        it does not ensure that the resources exist or that the providers are properly configured.
+
+=> terraform fmt - automatically updates terraform configuration files into a canonical format and style, improving consistentcy and readibility.
+                  it only works for the files in the working directory but also can add a recursive flag format .tf in the nested directories.
+
+=> terraform plan - creates an execution plan which tells what terraform does to achieve the desired state in te terraform files.
+    terraform -out <file_name> - writes the execution plan to an external file.
+
+=> terraform apply : applies the execution plan making the necessary changes to reach the desired state of the resources.
+                     if we use the command terraform plan -out <file_name> then we have to use the use terraform apply <file_name>
+
+
+=> terraform show : gives the human readable output from a state or plan. It's used to inspect the current state or see the actions planned by a terraform plan command.
+
+=> terraform state list : lists all the resources in that state file, useful for managing and manipulating the state.
+
+=> terraform destroy : destroys all the resources tracked in the state file. 
+                        It is equivalent of passing -destroy flag to terraform apply.
+
+=> terraform -help : gets all the info about the command.
+
+
+
+Note: It is like a tool that builds and manages the infrastructure of projects on cloud. It remembers what it has built, so to know what to change ot keep the same when you run terraform again.
+=> It will track changes by comparing the current state with the state file.
+
+How state works?
+=> when we first run terraform apply, terraform creates the resources and writes teh details int a state file.
+=> if we change configuration and run terraform plan, it checks the state file to see what's already there and what needs to be changed.
+=> when we run terraform apply it updates the resources based on your new configuration and updates the state file to reflect these changes.
+
+
+
+terraform plan -- used to create an execution plan
+=============
+It allows you to see what terraform will do before you can apply changes.
+
+what it does?
+=> Terraform reads configuration files
+=> It compares current state of infrastructure (stored in teh state file) with the desired state in the configuration and creates a plan to show what actions terraform will take to achieve the desited state.
+=> The plan will show any changes that will be made to your infrastructure.
+
+terraform apply -- Used to execute the changes described in the plan.
+==============
+=> It creates , updates and deletes resources to match the desired state defined in config file.
+=> used after applying changes terraform updates the state file to reflect teh current state of infrastructure.

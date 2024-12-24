@@ -1,0 +1,47 @@
+Security Groups (SG)
+-------------------
+
+=> Security Groups are used to configure the inbound and outbound rules for the instance.
+
+
+
+
+    inbound rules         EC2 Instance          outbound rules
+
+Inbound rules: Decides who can access our EC2 instance.
+outbound rules: What the EC2 instance can accrss.
+
+
+ -> By default all inbound traffic is denied in EC2 and Outbound traffic is allowed.
+ -> If we want to allow the traffic for EC2 then we have to configure inbound rules.
+    SSH ----> Port Range(22)
+    RDP ----> Port Range(3389)
+    Http ---> Port Range(80)
+    Https ---> Port Range
+
+Creating Security Groups (EC2 ----> Under network and Security finf Security Groups ---> Click on Create Seciruty group --> Select the settings ---> Give the inbound and outbound details.)
+------------------------
+
+Types of IP's in EC2 (Internet Protocol)
+--------------------
+1) private IP
+2) public  IP
+3) Elastic IP
+
+Private IP
+----------
+=> Every EC2 instance will have its own IP called as private IP. We cannot connect to instances using the provate IP.
+=> If we want to connect to EC2 instance from outside we need public IP.
+
+note: private IP is mandatory for every EC2 instance. Public IP is optional.
+
+=> Private IP is static and public IP is dynamic.
+
+=> If we want one static IP to connect with our EC2 instance from outside then we should go for Elastic IP.
+=> Elastic IPs are static IPs. If we start and stop teh instance Elastic Ip will not change.
+=> 5 Elastic IPs are free of cost( soft limit).
+=> If we crete Elastic IP then we should attach that with EC2 instance otherwise it will be charged. 
+
+Elastic IP creation : EC2 -> IUnder network and Security find Elastic IPs  -> Click on Allocate Elastic IPs -> click on Allocate.
+After creation select the Elastic IP -> Click on Actions ---> Select Associate Elastic IP address --> Choose the instance --> Click on associate buttons.
+Release ELastic Ip:

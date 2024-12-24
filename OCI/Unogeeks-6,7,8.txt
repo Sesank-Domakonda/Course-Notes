@@ -1,0 +1,85 @@
+Use Case: Build a REST API which takes firstName(String) as input, prefix Hello and send it back as response.
+
+In the Developer Services -> Under Application Integration -> find the Integration option
+
+Create a project ----> Click on projects on left hand  ---> Click on Add---> Click create --> Enter the details
+we can only create projects which does not have Events, Packages, Agents, Adapters.
+
+1) To build a REST API Integration we need to build a REST connection.
+
+https://drive.google.com/file/d/1puDAH_9Uw_7FuhqWVoR7ghrB_VRIXDsd/view?usp=drive_link
+
+(Go to the projects ----> Click on the Add in the connection section ---> Choose Name and Select the role (Trigger or Trigger and Invoke) ---> Clik on create ---> Choose the Security policy (OAuth,Basic Authentication --> Also choose on the Access type (Public (Used by everyone having the endpoint) /private (Cannot be accessed by anyone) ) --> click on save on the right hand top corner ))
+
+Choose 
+Trigger -- Then we can use this connection to start the integration (first node).
+Invoke -- when we wan't to use the connection as a subsequent node. (in between the integration).
+Trigger and Invoke - when we want the connection to start and also use it in the middle.
+
+We cannot the change the role of connection after creating it.
+
+=> Trigger Connection determines:
+*Whether your integration is exposed as SOAP or REST service.
+*What request payload needs to be passed to invoke the integration.
+
+
+2) Under the Integration section click on add -> Choose Create/Impot/Copy Integration 
+If clicked on Create ---> Select type of Integration (Event/Application/Schedule)
+
+If clicked on Application --> Enter the Name, Identifier, enter the version number (if required) --> Toogle on the Available to others projects on in the bottom.
+
+
+=> Create trigger connection with REST adapter
+In the Integration -> Click on the integration ---> Click on the + button and add the connection created.
+
+https://drive.google.com/file/d/1kQQeEZoInT7AhTipjMRHmiKFXBg60YIw/view?usp=drive_link
+
+Enter the name of the endpoint --> Also check the radio button in the end end to allow multiple resources to start from the connection. --> click on continue
+Select the operation name (default) --> Write what this operation does(takes firstname as input and send back as response) --> select the endpoints relative URL and in the URL also choose if there are any inputs to be passed like (firstname) (/sayhello/{firstName}/{lastName}) --> 
+Select what action do you want to perform on the endpoint (GET/POST/DELETE/PATCH) --> Click on Continue --> Select the template parameters and Query Parameters ---> click on continue --> give the same request payload
+
+ex: Sample response payload
+{
+  "Greeting" : "Hello Sesank"
+}
+
+
+Query parameters vs template Parameters
+------------------------------------------
+When we declare teh template parameters then those will be included in the URL whereas the query params cannot be passed in the URL and needs to be explicitly said.
+
+Template params ex:
+URL : https://<instance_link>/ic/api/REST_HELLO_WORLD/sayHello/Sesank
+
+Query Parameter:
+URL:  https://<instance_link>/ic/api/REST_HELLO_WORLD/sayHello/fname=Sesank
+
+after all, we get a mapper element automatically assigned  ---> click on it--> Map the elemenents and click on dev tools --> click on validate at the top roght corner-> clcik back --> save the integration
+we need to activate the integration (It will initially be in the draft stage) we can change it by enablign tracking identifiers.
+
+We can enable the identifiers by
+go into the integration --> click in {x} (business identifiers).
+
+Enabling the identifiers is importatn because the client runs the integration many times ans this can be seen in the observability --> click on instances --> we see a list of all the runs of intrgrations run --> to search for a particular run we can search using the identifier.(say first name is passed as sesank/john) --> save it -->
+the integration will change its status as configured ---> click on the 3 horizontal dots on the right of integration ->click on activate. --> click on the 3 dots --> click on run -->  click on the endpoint metadata --> 
+
+=> Build the integration
+
+=> Activate the integration
+
+=> Test the REST API from OIC and monitor the request.
+
+
+session -8
+----------
+
+=> when clicked on the mapper element we get options to review check the code (<>), test the integration (play button).
+=> on the right top we have the filer option 
+
+
+After setting the tracking identifier we can activate the integration with 3 levels of tracing
+=> Production : All activities outside the loop (forEach, while) are captured and within loops only invoke(invoke any connection) and logger activity (print any messages) are shown in the activity stream and this data is retained for 32 days.
+               we don't see the payloads too only the activity.
+
+=> Audit: Production + wire payloads for trigger/invokes are shown in the activity stream and this data is retained for 8 days.
+=> Debug : production + audit + payloads for evry node and the data is retained for 24 hours.

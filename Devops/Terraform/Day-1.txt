@@ -1,0 +1,50 @@
+What is Infrastructure as Code?
+Provisioning ahd managing Infrastructure through code instead of manually.
+
+Creating Infrastructure manually and using CLI
+------------------------------------------------
+=> Hard to produce large Infrastructures.
+=> Hard to track and revert changes.
+=> Very error prone in terms of configuration.
+
+
+VPC - Logical partitions of AWS infrastructure to deploy resources.
+=> we have a default VPC to all the regions. 
+=> Every VPC is connected to a Main route table.
+
+How to differentiate public and private subnets?
+
+Internet Gateway: Public subnets are associated with a route table that has a route to an internet gateway. This enables instances in the subnet to have direct access to the internet.
+No Internet Gateway Route: Private subnets do not have a route to an internet gateway. This means instances in a private subnet cannot be directly accessed from the internet.
+
+IG ---> VPC (subnets) 
+route table ---------> public subnets
+
+why use terraform?
+Platform agnostic - terraform can be used with multiple providers both in cloud and on premises.
+High level abstraction - Manage resources across multiple providers
+Modular approach - we can create modules grouping resources and then combine and compise these modules to a bigger solution.
+
+Terraform architecture
+---------------------
+
+provider - it is a piece of code which implements an interface required so that terraform can interact with remote api's.
+           they provide the logic to interact with api's
+                
+                providers    Remote APIs
+               |---AWS        AWS API
+Terraform ---------Azure      Azure API
+core           |---GCP        GCP API
+
+
+
+
+Stages of provisioning infrastructure
+-------------------------------------
+
+Terraform has 3 stages for provisioning and managing infrastructure
+=> Plan
+=> Apply
+=> Destroy
+
+

@@ -1,0 +1,127 @@
+What is Kubernetes?
+=> It is an open source orchestraation platform. It is called as K8S (Called so becasue there are 8 characters b/w k and s).
+
+=> K8S was developed by Goole usign Go language. Later donated it to CNCF.
+
+Docker Swarm Vs K8S
+-------------------
+=> There is no autoscaling in Dockerswarm.(Increasing and decreasing containers count based on incoming requests for the application)
+=> Kubernetes is a replacement for the Docker Swarm but not Docker. It is used to manage Docker contaianers.
+=> For production Kubernetes is highly recommended.
+
+
+Cluster Architecture
+---------------------
+
+------------------     ----------------------   Worker Node
+|                 |                                       
+| Master node     |    ------------------------   Worker Node
+|                 |
+-------------------    -----------------------    Worker Node
+
+Cluster: group of servers.
+Master node manages the worker nodes and the the containers will be created on the worker nodes.
+
+Say we have a machine and installed docker in it and running the application in a container if the machine fails there will be a singel point of failure.
+
+In the real time the applications run in a cluster.
+Multiple master nodes are also taken.
+
+
+
+Kubernetes Architecture
+-----------------------
+https://drive.google.com/file/d/1r8gzuVSJrgrEdrYKiwzbwT-piowUyTbu/view?usp=drive_link
+
+Devops Engineer cretes an Image ---> request control plane to deploy application as docker container --> IN control place API Server receives the request and stores in etcd
+
+Control Plane(Master Node)          
+-------------
+API Server
+Scheduler
+Controller-Manager
+etcd
+
+
+API Servers: It is responsible to handle incoming requests of Control plane. (deploy our applications)
+-----------
+
+etcd: It is an internal DB in k8s cluster, API server will store requests / tasks info in ETCD.
+----
+
+scheduler: It is responsible to schedule pending tasks in etcd. It will decide in which worker node should execute our task. Schedular will decide that by communicating with Kubelet.
+---------- ex: we wan't to run MySQL DB as Docker container in kuberntes cluster.
+
+So now API server will take the request ----> store in etcd ------> Scheduler schedules the tasks available in ETCD. It will decide in which worker node our task should execute.
+
+How does scheduler decide which worker node should execute?
+It will talk to worker node agent. Scheduler speaks to kubelet in the worker node.
+
+Kubelet: It is called a node agent(personnal assistent).
+-------
+
+Worker Node: Responsible to execute our application PODS.
+-----------
+
+Controller manager: It is responsible to send the task to worker node to create a POD.
+-----------------
+  
+Scheduler speaks to kubelet(node agent) --> Controller manager will execute the task on the worker node decided by the scheduler and will create a container in there.
+
+Kubectl -- CLI software used to communicate with the kubernetes control plane.
+------
+
+Kube proxy  - provide the network connection between the Control place and Workwr node.
+-----------
+
+UI - It is a webpage used to communicate with the control plane.
+In the worker node the docker engine will be installed since the containers are being executed in the worker nodes.
+
+Just like how every unit in the docker is represented like a container in kubernets the units are represented with pods. 
+
+PODS - Smallest deployable unit that can contain one or more containers.
+----
+
+AI Generated Kubernetes Architecture
+------------------------------------
+In kubernets PODS are increasedx and decreased based on the incoming requests.
+
+Kubernetes Architecture Overview
+Control Plane (Master Node)
+The control plane manages the worker nodes and the Kubernetes cluster. It has four main components:
+
+API Server: The entry point for all Kubernetes commands. It receives requests and stores them in etcd.
+
+Scheduler: Checks etcd for incoming requests and decides which worker node will host a new pod.
+
+Controller Manager: Executes the decisions of the scheduler by managing the state of the cluster.
+
+etcd: A distributed key-value store that holds all cluster data.
+
+Requests to deploy containers are sent to the control plane via kubectl or the UI. These requests are processed by the API Server and stored in etcd. The Scheduler checks etcd for requests and communicates with kubelet to decide which worker node will create the container. The Controller Manager assigns tasks to the worker node based on the scheduler's decision.
+
+Worker Node
+The worker nodes run the applications. They have several components:
+
+PODS: The smallest deployable unit that can contain one or more containers.
+
+Kubelet: The node agent that manages the state of the pods.
+
+Kube-proxy: Manages the network communication between pods and nodes.
+
+Docker Engine: Runs the containers within the pods.
+
+Components Interaction
+API Server receives deployment requests.
+
+etcd stores the cluster state and requests data.
+
+Scheduler assigns pods to worker nodes.
+
+Controller Manager ensures the desired state of the cluster.
+
+Kubelet on worker nodes manages individual containers.
+
+Kube-proxy handles networking.
+
+This architecture ensures that Kubernetes clusters are scalable, resilient, and capable of managing containerized applications efficiently.

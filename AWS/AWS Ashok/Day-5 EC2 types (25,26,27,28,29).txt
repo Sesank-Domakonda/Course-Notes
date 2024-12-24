@@ -1,0 +1,216 @@
+EC2 Instance types
+===================
+1) On Demand Instances 
+2) Reserved Instances
+3) Spot Instances
+4) Dedicated Host
+
+
+On-Demand Instance
+===================
+-> Fixed Price (Hourly) 
+-> we will be charged for 1 hour even if we use for 5 minutes.
+-> Pay for what you have used
+-> No prior commitment or Prior payment.
+-> No predictable usage.
+
+Reserved Instances (Long Term Commitments)
+==================
+-> Long term payments
+-> Prior Payment (Full, partial)
+-> 1 or 3 years
+-> 75% discount on hourly price.
+-> Predictable usage
+
+Spot Instances
+==============
+-> Auction instance
+-> On Bidding basis ( Huge capacity for cheaper price)
+-> Application with start and end times.
+
+Dedicated Instances
+====================
+-> It refers to a physical server that is fully allocated to a single customer in a cloud environment.
+
+
+Instance states
+---------------
+Launch
+Running
+Stop
+Reboot 
+Terminate
+
+EC2 have several families
+-------------------------
+-> EC2 have several families like
+General purpose - Balanced compute (memorym networking resources)
+Compute Optmimized - High performace processors for compute-intensice applications. Suitable for batch processing, high-performance.
+Memory Optmimized - Designed for workloads that pricess large data sets in memory. Ideal for high performance DB
+Storage Optimized - High sequential read and write access to a very large data sets. Suitable for data warehousing, Hadoop.
+
+
+AMI - Amazon Machine Image
+====
+
+What is an Image?
+Entire copy of an OS is called an image.
+
+AWS Image - Preconfigured system
+-> we can create our own AMI in AWS.
+
+
+Creating an Image ( Select the Instance - > Click on Actions -> Select Images and Templates -> Click on create Image)
+=> we can now launch an instace from our AMI now. (go to images section and check the presence of image we have created.)
+=> AMI is reion specific.
+
+Delete the AMI ( select the AMI -> click on Actione -> Click on Deregister AMI)
+
+
+EBS (Elastic Block store)
+====  
+
+=> When we create EC2 Instance with Linux OS we get storage upto 8 GB.
+=> When we terminate the instance then we will loose our data too.
+=> 30 GB is a free storage for EBS the rest be paid.
+
+
+=> To store the data permanently even after the instance has been terminated we have elastic block storage.
+=> In EBS we will create volumes to store the data. We can attach these volumes to EC2 Instances.
+
+There are two types of  Storages
+*EBS volumes
+*Instance store
+
+   EBS Volumes                                              Instance store
+  =================================================================================
+1) Permanent Storage                                        Not Persistent storage
+2)No data loss even after EC2 is Stopped                    Not Persistent  
+3)EBS Volume max size 16 TB                                 They get terminated after instance is terminated.
+
+
+
+EBS Volume types (AZ specific)
+-------------------
+1)General purpose volumes(gp2, gp1) 1GB - 16TB
+2)Provisioned IOPS Volumes (io1, io2) - SSD => High performance (4GB - 16 GB) - costly
+3)Throughput (st1) - Frequently accessed data with cheap price.
+4) Cold - HDD => Not feequently accessed data with cheap price
+5) Magnetic - HDD => previous gen 
+
+Creating Volumes - Click on volumes on the left hand side -> click on create volume -> Check options(volumetype & zone(make sure to use the same zone as the instance) ) -> Click on create volume
+Attach volumes to Instance -> Select a particular volume -> Click on Actions -> Select the instance -> Click on attach
+
+
+=> The EBS volumes are region specific. We can attach to the volumes specific to regions.
+ The difference between Instance store and EBS volumes is the path:
+ https://drive.google.com/file/d/1KzJmFouqH5S2M4filXZitNpNFoUO_fwd/view?usp=drive_link
+
+
+
+EBS Lab task
+-------------
+1) Create an EC2 Linux Instance with Amazon Linux 2 AMI
+2) Create additional ebs volume with 10 GB
+3) Attach EBS volume of 10GB for storing data
+4) Connect to EC2 instance and verify volumes (EBS volume should be shown)
+5) Create a directory and mount EBS volume to created directory.
+6) Store the data in EBS volume mounted directory (Create new files)
+7) Detach EBS volume from EC2 and stop/terminate EC2 instance.
+8) Create new EC2 instance and attach previously created EBS volume
+9) Connect to new EC2 instance using putty and verify volumes (EBS volume should display)
+10) Create a directory and mount EBS volume to created directory
+11) Verify data which stored previously in EBS available or not (it should be present)
+12) Stop instance and delete the volumes
+
+
+procedure
+----------
+1) while creating an instance go to the storage and add volume  or create a volume and attac it seperately 
+2) check with lsblk command
+3) sudo file -s /dev/<path_to_ebs>  - It is used to determine the file system type or content of the specified device
+4) sudo mke2fs -j /dev/xvdb - It formats the device at /dev/xvdb with an ext3 file system
+5) sudo su
+6) sudo mkdir  /newdisk - we are creating a new folder called newdisk
+7) sudo mount /dev/xvdb /newdisk - we are mounting the EBS volume to the /newdisk
+8) dh -h -we can check the disk storage and verify if the EBS is mounted to the directory.
+
+
+
+Q) what does mount mean by?
+We are pointing the EBS volume to the directory on the device. So whatever data we store on /newdisk will be stored on EBS volume.
+
+Q) we already have EBS attached to our instance but why are we mouting EBS to a specific directory?
+When you attach an EBS volume to an instance, it becomes available as a block device, but it is not automatically usable. 
+You need to mount it to a directory in your file system to access and use the storage.
+ 
+More on Root and EBS Volumes
+-------------------------------
+1) When we create EC2 instance, EBS Root Volume will be craeted by default.
+2) We can detach EBS root volume from EC2
+3) To run EC2 Instance EBS Root volume is mandatory.
+4) Extra EBS volumes can be attched to an instance and remove when they are not required.
+In real time root volume contains OS
+=> Additional volumes contains our application and application configuration files.
+
+Only Provisioned IOPS (io2) supports Multi Attach - volumes can be attached to multiple instances at a time.
+
+
+
+EBS Snapshot
+==============
+
+Snapshot
+----------
+=> Its a copy/backup ,In AWS snapshots are used to take backup of volumes.
+=> Every volume will have its own snapshot. ( Snapshots are taken for each EBS volume independently.)
+=> It is 50 GB in size.
+=> We will go for incremental backup (only latest changes are taken  but not taking snapshot  of entire file again and again). It is a point in time copy of the volume.
+
+EBS Volumes --------> EBS Snapshot -------> EBS Volume
+we can create snapshots from volumes and do the other way around.
+
+=> we cannot attach snapshot to EC2 directly.
+ From snapshot we will create volume and the volume can be attached to EC2.
+
+=> Snapshots are regional specific. They can be copied from one region to the other in the same AWS account.
+=> EBS snapshots are stored in Amazon EBS and AWS manages their storeage in S3.
+
+How to move the volume from one AZ to other AZ?
+https://drive.google.com/file/d/1NOBnderhcDnOKYb2M4gtin6VU2i63CE6/view?usp=drive_link
+
+
+Creating a Snapshot : Find the snapshots on the left ---> Select he resource type (single volume or multi volume)
+------------------
+https://drive.google.com/file/d/1NOBnderhcDnOKYb2M4gtin6VU2i63CE6/view?usp=drive_link
+
+Use volume option for taking a snapshot for a specific volume.
+Instance option when the instance has multiple volumes attached.
+
+
+Multiple volumes attached to EC2.                           Single volume to Multiple EC2 Instances.
+
+V1  -------------------                                      EC2 (ia) -------------------
+                      |                                                                    |
+V2     ----------     EC2                                    EC2 (ib) ---------------- Volume
+                       |                                                                   |
+V3  ------------------                                       EC2 (ic) ----------------------
+                                                               
+                                                               But here the volume must be provisioned io2.
+
+
+
+Creating a volume from Snapshot : Select the snapshots -----> click on actions ---> select the type of volume you want to create.
+------------------------------- 
+
+Snaspshot Lab Task
+-------------------
+1) Create EC2 Instance in 1a zone.
+2) Create EBS Additional Volume (v1) in 1a zone.
+3) Create Snapshot(s1) from 1a zone volume(v1)
+4) Create Volume(v2) in 1b zone from Snapshot(s1).
+5) Create EC2 Instance in 1b zone.
+6) Attach 1b zone volume(v2) top 1b zone EC2 instance.
+7) Delete snapshot, volume and instanaces.
+
+

@@ -1,0 +1,40 @@
+yaml - yet another markup language
+=> The structure looks like a dictionary. It has keys and values.
+
+key: value
+
+There are 3 building blocks in the GHA
+*Workflows
+*Jobs
+*Steps
+
+Workflows 
+---------
+=> They are defined at the repository level
+=> Define which triggers which trigger the workflow
+=> They are composed of one or more jobs
+
+Jobs
+----
+=> Are defined at the workflow level
+=> Define in which execution environment they are run
+=> Consists of one or more steps.
+=> They run in parallel
+
+Steps
+------
+=> Defined at the job level
+=> Define the actual script or Github action that will be executed
+=> Run sequentially by default
+
+
+Events:
+-------
+They trigger workflows in multiple ways such as 
+Repository level -- push, issues, pull_request
+manual trigger - Triggered via the UI, Triggered via an API call, Triggered from another workflow
+schedule - Run as a cron job 
+
+https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
+
+refer this for the events in the gha

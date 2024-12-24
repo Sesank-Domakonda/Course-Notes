@@ -1,0 +1,71 @@
+Environment Variables and Secrets
+---------------------------------
+=>Environment variables are dynamic values that computer process to configure applications.
+=>It is used to store info like API keys/ DB passwords securely outside the code.
+
+for ex: password we use to connect to DB. these may be dynamic bcoz it depends on environemnt like testing and prod.
+
+https://drive.google.com/file/d/1MPNWgVwIfWfHDWNNiTceI90u67HubaQ2/view?usp=drive_link
+
+=>There are several places to declare environment variables.
+*we can declare it on the workflow level like (also we can declare them on job amd step level too)
+
+name: workflow
+on: 
+  push:
+    branches:
+      - dev
+      - main
+
+env:
+  MONGODB_DB_NAME: gha-demo  // this indicates that the mongodb name is available throught the workflow.
+
+=>So this mongodb name will be available in all the jobs unless some job overrides it.
+
+
+*We can declare it in the job level also.
+=>we can get interpolate the variable with the $sign like.
+${PATH}.
+
+=>We can also get the values in this way with ${{env}} - using the env object in github which gives access to all the values in the environment variables.
+
+Github Secrets
+---------------
+=>In the github secrets we should be able to store the confidential info inside the github secrets.
+=>click the settings button --> Click on the secrets and variables --> we can click the Secrets button and then click on the actions.
+=>After adding the values then we cannot view them but just add the values to it.
+
+
+After adding the secrets now we can just reference them with {{secrets.}}
+secrets - it is a variable which can be used to reference variables.
+
+
+Environments
+--------------
+
+=>Github Environments are for workflows so they can reference these environments and provide extra configurations to the job.
+
+In the environments we can add the environment specific secrets like the specific DB for testing, prod etc.
+
+we can refere the environment by adding the environment inside the jobs like:
+
+name: xyz
+on: push
+
+jobs:
+  first_job:
+    environment: testing // this is used to refer 
+    env:
+      MONGODB_CLUSTER_ADDRESS:  ----------
+      .....
+    
+    runs-on: ubuntu-latest
+    steps:
+      ............
+
+while creating environments it will give freatures such as :
+- Required reviewers - approval from specific reviewrs if necessary
+- Wait timer: Wait for deployments to proceed.
+
+Deployment branches:
+- select the branches to which the event applies to.

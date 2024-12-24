@@ -1,0 +1,167 @@
+
+Creating Users and Groups: (Click on hamburger -> Click on Domains -> Select users on the keft section)
+Creating groups: (click on identity -> select a particular domain you want to create groups in domain)
+
+
+Difference between domains and groups
+--------------------------------------
+    Domains                                              Groups
+
+containers for managing users,roles                    collection of users that share common access needs 
+and security settings. They help to                    permissions.
+organize and isolate resources and policies
+
+Just like AWS users can be created in OCi wothout assigning roles.
+
+OCI application roles
+---------------------
+
+https://drive.google.com/file/d/16LZyYe-xHsHxTVT5wqOkfW9hzFyuZzyO/view?usp=drive_link
+
+=> We have various roles in OIC such as 
+*Service administrator
+*Service Developer - A user with this role can develop the artifacts like integration, processes etc.
+
+
+Granting Role to a user: Go to domain where the user is created(Domain) -> Click on oracle cloud services. Search for the instance you want to add role to.
+
+When we click on the pracle cloud services we will see all the cloud services available (also the instance we have created).
+->We can see the roles when we click on the instance -> click on application roles to the left.
+
+
+https://drive.google.com/file/d/1s4Rr0xgUyeSb1uyu0lC-AilT68pbRu-7/view?usp=drive_link
+
+https://drive.google.com/file/d/19aLT2j8Ax73g557vYUYU2YdNLTQXUsPj/view?usp=drive_link
+
+So when we click on the instance -> click on the application roles to the left -> we will be able to assign roles to users like service dev, service admin.
+
+
+OIC Integration Terminologies
+-----------------------------
+
+=>XML- extensible markup language - Used for data Interchange between different systems, especially in web services and APIs.
+=>Its called markup language because we make use of marks(tags).
+
+->It is used to represent complex documents with a structured format.
+
+ex: 
+<xml version = "1.0" encoding= "UTF-8"?>     Prolog - gives the version of XML version and the encoding used.
+<book>                                       root element
+<title>Sample Book</title>               
+<author>John Doe</author>
+<price>25.0</price>
+</book>
+
+
+somethimes to represent elements which does not have value/child elemets we can represent it with as <sample/>
+
+refer the XML notes.
+
+XML name spaces
+===============
+
+=> Namespaces in XML are used to distinguish between elements that may have the same name but belong to different contexts.
+=> the namespace is declared using the xmlns attribute
+
+https://drive.google.com/file/d/1VRqpyYQWdf8fF1-2vXB5HQegliGL3-dI/view?usp=drive_link
+
+=> Elements and attributes can then use this prefix to indicate that they belong to the specified namespace.
+
+https://drive.google.com/file/d/1VRqpyYQWdf8fF1-2vXB5HQegliGL3-dI/view?usp=drive_link
+
+Namespaces in XML are used ti 
+
+https://drive.google.com/file/d/1pE3nTYESD6APmUehlG_a1FPnNR0ulA6t/view?usp=drive_link
+
+
+
+XSD(XML Schema Definition)
+============================
+=>XSD will define the structure and constraints of XML data, defining the elements, data types and relationships.
+=>It provides a blueprint for validating the structure and content of XML documents.
+
+ex: for example if we want to define say the age of person to be numeric and above 18. we can do this with the XSD.
+
+https://drive.google.com/file/d/1F5aGvr_7MXNLUgxWr7EKU--bsuEQzqat/view?usp=drive_link
+
+https://drive.google.com/file/d/188YT_nc5xm4NAmKmtQxLXJFyrVxRMTL0/view?usp=drive_link
+
+https://drive.google.com/file/d/1WfK3p16DonaFMtvtRBzQPKT8V1WyT7ED/view?usp=drive_link
+
+
+XPath
+======
+
+=> Xpath stands for XML Path language.
+=> Xpath used "path like" syntac to identity and navigate nodes in an XML document.
+
+https://drive.google.com/file/d/1FqrX6joLpVTKw2ZZzC1PZQH86QAsaFh1/view?usp=drive_link
+
+
+Webservice   - When we talk about a web service, we’re referring to the whole setup that enables the client to send a request and the server to respond over the internet. 
+------------
+=>Its a way for application to talk to each other and exchange the data over the internet.
+=>The webservice is an interface where it takes request from the client, process it and sends it back to the client.
+
+ex: restaurent
+when we place an order we become client. 
+waiter becomes the webservice where we send a request asking to perform some action.
+webservice processes the request and sends back to the response.
+
+https://drive.google.com/file/d/1b2zHUqQVNPK6hw-5vPhNSR8MmnZg4gok/view?usp=drive_link
+
+
+
+WSDL (Webservice Description language)
+----------------------------------------
+=>Its an XML based language which defines the interface and operations offered by web service.
+Purpose: Describes how to access a webservice and its functionalities.
+
+https://drive.google.com/file/d/1GLaqRDYLfs0lIl1uM00VJfU80Go7nJIK/view?usp=drive_link
+
+
+ex: String sayHello(String firstName, String lastName){
+
+     String returnMessage = "Hello, "+firstName +" "+ lastName;
+     return returnMessage;
+}
+
+The above code has function and arguemnts. The same way we have operations and payloads.s
+
+Operation Name: sayHello
+Input part1: firstName
+Input part2 : lastName
+
+Output part: return message.
+
+
+
+Why WSDL?
+-----------
+
+say we have a program in Java and we have another application in .NET. But this java application cannot be invoked by the .Net.
+=>So to define the webservice the WSDL has been introduced. So after this the application is made generic which can be invoked by any other application.
+
+
+https://drive.google.com/file/d/1ifrF8XrJsfGr25rdmQXOjMQPQyQqJOuI/view?usp=drive_link
+
+WSDL types:
+=>Abstract WSDL 
+=>Concrete WSDL
+
+https://drive.google.com/file/d/1ifrF8XrJsfGr25rdmQXOjMQPQyQqJOuI/view?usp=drive_link
+
+
+Types of Webservices
+----------------------
+1)Synchronous                      ex: inserting card into ATM
+2)Asynchronous request/callback    ex: whatsapp forward message is acknowledged with ouble tick.
+3)Asynchronous request only
+https://drive.google.com/file/d/1ifrF8XrJsfGr25rdmQXOjMQPQyQqJOuI/view?usp=drive_link
+
+
+JSON
+----
+Java Script object notation.
+
+

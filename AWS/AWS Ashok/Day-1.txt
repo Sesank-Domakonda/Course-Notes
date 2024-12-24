@@ -1,0 +1,241 @@
+EC2 - Elastic cloud compute
+====
+=> We can create virtual machines (VM) required for our project.
+
+Computer/Machine/Server/VM ===> Instances.
+
+                                            AWS Datacenter
+RDP (remote desktop connection) ---->     EC2-Instance (Windows)
+Using RDP we can connect from one windows machine to another windows machine using DNS, Uname, Password.
+
+Disadvantages of Windows
+-------------------------
+=> Windoes OS provides by microsft company
+=> Windows is paid software 
+=> Windows is single user based Operating system. (Only one user can acceess at a time).
+
+
+To overcome the problem of Windows we go for Linux.
+
+Linux ideal to run servers, app hosting, to run db servers.
+
+AWS security key pair - they consist of AWS public key (stored by AWS) + private key(stored by us). Together they allow us to connect to the instance securely.
+
+        private key
+MY PC -----------------------> EC2-Instance
+
+When we want to connect with an instance then we should send the private key to EC2. Then if the private key matches with the public key then we can get connected with the Instance.
+This process is called as handshake.
+
+
+
+MY PC (windows) --------------> Putty --------------> EC2 Instance
+  .pem                                                  public key
+
+=> putty cannot understand .pem file so we need to convert it to .ppk software. we can do that by using the putty gen software.
+
+
+
+Linux Architecture
+-----------------
+
+       Applications - Applications are the utilities which runs on the shell. ex: Browser, Text editor etc.
+        Shell     - Interface between kernel and user. Takes input from user sends instructions to kernel and sends the response from the kernel to the shell.
+        Kernel    - Core component of Linux OS which interacts with the hardware directly.
+        Hardware  - computer hardware such as RAM, Harddisk, Mother Board.
+
+
+In linux everything will be treated as a file only.
+All the files in Linux are divided into 3 types
+*Ordinary files - the files which contains data directly (.txt, images, audios, videos)
+*Directory files - Folders in windows.
+*Device files  - In linux every device will be represented as a file.
+
+
+How to check file type in Linux? -- ls -l (the first character represents the file type)
+
+Root Directory
+---------------
+=>  We can create files in the root directory if we are root user.
+
+Linux commands
+===============
+1)ls - list all the files
+2)pwd - present working directory
+3)whoami - gives which username of who is currently using the system.
+4)cd .. - changing the directory
+5)ls - list the files
+   -l - long list of files
+   -t - display files on last modifies data and time (most recent on top)
+   -r - it will display list of all the files with the old files on top and the most recent ones in the bottom.
+   -a - displays hidden files
+   -R - recursively lists all the directories and sub directories
+
+6) date - gives today's date.
+
+7) clear - clear the data from the terminal.
+8) mkdir - create directories
+9) rmdir - remove empty directories 
+10) rm -r <dir> - removes the directories
+11) touch <file_name> - empty file will be created.
+12) cat > <file_name> - this will create a file with content.
+     cat >> <file_name> - to append teh content.
+     cat <file_name> - this will print the content.
+can also print the contents of multiple files by cat <fil1> <File2>. 
+Can also concatenate files cat <file1> <file2> > <file3>
+
+13) Head <file_name> - this will give the first 10 lines of the file
+    Head -n <number> <file_name> - this will give the required number of lines for the document.
+14) Tail <file_name> - this will print the last 10 lines.
+     Tail -f <file_name> - this will attach us to the live server and get the live logs
+
+15) cp - copy file/directories from one file to another. cp <source> <destination>.
+
+16) mv - move files/directories from one location to another.
+         Also used to rename the files/directory.
+
+17) grep(global regular expression print) -  To check exception messages in log files we can use 'grep' command.
+    -> It is a powerful command which is used for searching text in Linux file system.
+    grep -c "pattern" * - gives the count of the lines having the pattern and searches across all the files.
+    grep -l "pattern" app.log - it gives the file names which contains the text ab.
+    
+18) diff - to compare the files in linux we can use diff . diff <file_name1> <file_name2>
+
+In the vi editor if we want to replace some text, insert text, delete some particular file then we can do it with SED.
+
+19) sed - Stream editor
+    sed 's/unix/linux/g' file.txt - it will replace the word unix with linux.
+    sed '3d' <file.txt> - deletes a particular line in the file.
+
+
+difference between locate and find commands
+--------------------------------------------
+
+=> locate and find commands are used for finding file/directories.
+
+20) locate  - It will maintain its own DB and searches from it.
+              locate *.txt -- it will give all files available 
+              locate -c *.txt -- it will give count of text files available
+
+
+21) find - find file/directories
+    find /home -name f1.txt - in home find the f1.txt. It will search the entire linux filesystm to give the results.
+    find /tmp -type f - empty - it will give the empty files in the home directory.
+    find /tmp -type d -rmpty - it will give the empty directories 
+
+
+Performance wise locate is faster than find but will not give the results for newly created files and directories.
+
+
+File Permission in Linux
+=========================
+
+=> we know that Linux is multi user OS. Multiple users can connect wil linux machine at a time.
+=> Our Application reads config-data from a file.
+
+
+Working with File permission in Linux OS
+-----------------------------------------
+=> we can execute ls -l to view all the existing files and file permissions.
+
+it will show data in form of 
+
+drwxrwxrwx  (the first character is the file type). r- read, w-write, x-execute, - (indicates no permission).
+
+file permission contains 3 segements (user group others)
+
+rwx    rwx    rwx
+user   group  other
+
+22) chmod - change the permission for the files/
+
+chmod <permission> <file_name>.
+here in permission we have 
+
+u - user        + - add
+o - others      - - removes permissions
+g - group
+a - all 
+
+
+
+chmod u+x file.txt - add the execute permission for the file.txt file.
+chmod u=rwx,g=rx,o=r file.txt sets the exact permission to the groups
+
+we can also use symbolic representation for the permissions
+
+number             permission
+------------------------------
+0                   No permission
+1                   Execute
+2                   Write
+3                   Execute & Write
+4                   Read
+5                   Read & write
+6                   Read & write
+7                   Read, write and Execute
+
+chmod 777 <File_name> 
+
+
+
+Working with user accounts in linux
+===================================
+
+=> Linux is a multi user based OS
+
+23) sudo adduser <user_name> - creates a new user
+24) sud userdel <user_name> - deletes the user
+
+su <sesank> - we can switch to the user.
+
+
+Groups in Linux
+----------------
+=>groups means collection of users
+=> The primary purpose of group is to define a set of privilages.
+
+usecase: say there are 10 users and we have to give a common permission to all of them. If this is the case we have to execute ot 10 times.
+In this case we can create a group and give the permission to the group.
+
+The primary purpose of the group is to give permission to a resource to a set of users.
+
+25) sudo groupadd <group-name> - this will create a group 
+26) sudo usermod -aG <group-name> <user-name> - adding user to a group
+27) cat /etc/group  - view all the existing groups
+28) sudo gpasswd -d <user-name> <group-name> - remove the user from a group
+29) sudo groupdel  <group_name> - remove group from groupname
+ 
+
+chown command
+---------------
+it is used to change the ownership and ownership of a file/directory.
+30) sudo chown <user> <file>  - change the owner of the group
+31) sudo chown :group-name <file-name> - change the group of the file
+32) sudo chown username:groupname <file_name> - change both ownership and group of the file.
+
+
+
+winscp software can be used to connect windows with the linux.
+
+
+User1       --------------------                                             PC    
+                                            EC2 Machine          |  Win     files
+User 2       ---------------------    SG    apache2.html             SCP      .html assets
+                                    (http)  Ubuntu OS            |
+User 3        ------------------
+
+
+
+Networking Commands in Linux
+-----------------------------
+
+=> ifconfig - used to get the IP addredd of the system.
+=> ping - used to know if teh server is up adn running or not.
+=> curl <server_url> - It is used to get response from server.
+=> wget <url> - It is used to download a file.
+
+
+
+
+    

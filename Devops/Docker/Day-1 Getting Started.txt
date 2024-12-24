@@ -1,0 +1,48 @@
+What is Docker?
+Docker is a container technology: A tool for creating and managing containers.
+
+What is a container? 
+container - a standardized unit of software.
+Container: Package of code + dependencies to run that code( eg: NodeJS code + NodeJS runtime).
+
+What is the advantage?
+The same container always gives the exact same behavior. No matter where or by whom it might be executed.
+
+ex: a picnic basket. so here the basket contains 
+
+https://drive.google.com/file/d/1P9YtZPnVQKLj1d7ji01Kr0vJBfZHhtHX/view?usp=drive_link
+
+
+VM vs Docker
+-------------
+=>VM has an OS on another OS (refer slides for the pic)
+
+Every VM is like a standalone machine. It wastes a lot of compute, storage etc. on the machine.
+
+=>So VM has both pros and contains
+
+pros                                                                          Con
+=>Seperated environments                                                      => Redundant duplication, waste of spacce.
+=>Environment specific configurations are possible                            => Performace can be slow, boot times can be long
+=>Environment configurations can be shared and reproduced reliably            => Reproducing on another computing server is possible but tricky.
+
+
+
+Docker architecture
+---------------------
+
+Container     Container         Container
+App A         App B             App C
+Libs, Deps,   Libs, Deps,       Libs, Deps,
+Tools         Tools             Tools
+-----------------------------------------------
+        Docker Engine
+----------------------------------------------
+  Built-in container support
+-------------------------------------------------
+           OS
+
+=> Based on the docker engine we can spin the containers. 
+=>The container contains a light weight version of OS.
+
+=>We can build a container into something called as image and share the image with others.

@@ -1,0 +1,254 @@
+What is Docker?
+=> Docker is a containerization software used to build and deploy the application without worrying about the dependencies.
+
+
+Dockerfile/Docker image - It contains the instructions to build a docker image/ its a blueprint for creating docker containers.
+Appcode + depemndencies list(Docker file) ----> Docker Image
+
+Image - application code + dependencies
+
+*docker system prune -a - removes all the images used/unused and the networks.
+
+docker run <image> - this will download
+
+
+Docker file
+------------
+* It contains set of instructions to build docker image.
+* In dockerfile we will use Domain specific language.
+* Docker engine will read the dockerfile instructions from top to bottom.
+
+the keyword are:
+1)FROM           - base image to create out own image (ex: python, java). ex: python:1.8
+2)MAINTAINER     - Maintain the info about the author( who is creating, who is maintaining)
+3)COPY           - Copy files from source to destination while creating the docker image. (but only from the same machine)
+4)ADD            - (It can also download files from URL  ex: ADD <URL> <Destination> - it downloads the files from the URL to destination ).
+5)RUN            - execute instructions while creating docker images. (ex. RUN yum install git) They will be executed from top to bottom.
+6)CMD            - execute commands after the container is creates. We can have multiple CMD instructions but only the last one.
+7)ENTRYPOINT     - It is used to execute instructions while creeating the container. ENTRYPOINT ["echo","Container created successfully"]
+8)ENV            - Set the environment variables. ex: ENV java/etc/softwares/jdk
+9)WORKDIR       - Specify working directory for image and container. ex: WORKDIR /app/usr/
+10)EXPOSE        - Specify on which port number the docker container will run.
+11)VOLUME        - Specify docker volume storage location.
+12)ARG           - remove hard coded values in the docker file.
+                   ex: ARG branch
+                       RUN git clone -b $branch <repo-url> - clone a particular branch.
+
+13)USER          - Specify username for creating image/container. (execute the docker file from a particular user.
+                   ex: USER dockeruser
+
+14)LABEL         - Add metadata to docker objects in key-value format.
+what is the difference between RUN & CMD?
+RUN - execute commands while creating the images but CMD is used for commands to run while creaating the container.
+
+difference between CMD  and Entrypoint?
+CMD instructions can be overwritten but the ENTRYPOINT cannot be overwritten.
+
+wht is overwriting?
+we can have multiple CMD commands so when we declare the multiple ones we are overriding the previoud one with the next one.
+
+Process of pushing Images to Dockerhub
+--------------------------------------
+1)Build an image (docker build 0t <name> .)
+2)Login to the docker account (docker login)
+3)tag the image (docker tag <image_name> <tagged_image>) -- tagging is nothing but versioning
+4)push the image (docker push image)
+
+
+
+Docker Networks
+==================
+
+=> Docker networks provides isolated network for the Docker containers.
+=> We have 3 defauly networks in docker
+*Bridge  - Default network driver. (recommended for standalone containers and it will assign one OP for our docker container.)
+*Host    - Run standalone container but it will not assign any IP for container.  
+*None
+
+When we have multiple container and we want them communicate then we have to put them on the same network.
+
+*docker run -d -p 8080:0808 --network <name> <image_name>
+
+Docker Compose
+==============
+
+=> Nowadays projects are developed based on Microservices Architecture.
+
+Image 
+Front end  +      Backend  +            DB
+                   
+UI              CAB API          +    DB1
+                ROOM API         +    DB2
+                ADMIN API        +    DB3
+
+1 container --- UI
+3 containers --- Backend
+3 conatienrs --- DB
+
+SO here we not interested in putting all the project together (monolith) approch. Instead we break into into parts
+1) Frontend app Container
+2) Backend app container
+3) DB container
+
+Imagine to create all the containers and stop them which is troublesome.
+so managing multi container based applications is hard. So we go for docker compose.
+
+we give use "docker-compose.yml" file to provide containers information to Docker compose.
+Docker-compose.yml should have all the information related to conatainers creation.
+
+
+
+Docker Compose YML file contains 4 sections (vishnu sahasra namam videos)  
+-------------------------------------------
+*version  :  
+*services : image from which container has to be created,name of container, port mapping, 
+*network  : Under which network we want to create teh containers
+*volumes  : Where do we want to store the containers.
+
+
+Docker-compose file is also store in the source repo with the other source code.
+
+Docker-compose.yml vs Dockerfile
+---------------------------------
+Dockerfile - for image creation 
+Dockercompose - manage multiple containers.
+
+
+version: "3"
+services:
+  application:
+    image: spring-boot-mysql-app
+    ports:
+      - "8080:8080"
+    networks:
+      - springboot-db-net
+    depends_on:
+      - mysqldb
+    volumes:
+      - /data/springboot-app
+  mysqldb:
+    image: mysql:8.0
+    networks:
+      - springboot-db-net
+    ports:
+     - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=sbms
+    volumes:
+      - /data/mysql
+networks:
+  springboot-db-net:
+
+Installing Docker compose 
+----------------------------
+*sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+*sudo chmod +x /usr/local/bin/docker-compose - this will give user executable permissions to the docker-compose file.
+*docker compose --version - this will check the docker compose version.
+
+
+Earlier we have created the containers based on each image now we can create the containers with the docker file.
+
+So in the above docker-compose file we need to create application conatainer and db conatainer and connect them together.
+
+*docker-compose up - this can be used to create containers from the docker-compose file.
+
+version: "3"
+services: 
+  application:
+    image: springboot-mysql-app
+    ports:
+      - 8080:8080
+    networks:
+      - springboot-db-net
+    depends_on:
+      - mysqldb
+    volumes:
+      - /data/springboot-app
+  mysqldb:
+    image: mysql:5.7
+    networks:
+      - springboot-db-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=sbms
+    volumes:
+      - /data/mysql
+networks: 
+ springboot-db-net:
+
+Eventhough the docker-compose file is read from top to bottom but the first priority is given to networks.
+so then it goes to the application. Since the application has dependency on the DB then DB container is created.
+After this the application container is created.
+
+
+Deploy Spring Boot + MySQL  with Docker Compose
+===================================================
+
+$ git clone https://github.com/ashokitschool/spring-boot-mysql-docker-compose.git
+$ cd spring-boot-mysql-docker-compose
+$ mvn clean package
+$ docker build -t spring-boot-mysql-app .
+$ docker images
+$ docker-compose up -d
+$ docker-compose ps
+
+=> Access the application
+
+		URL : http://ec2-public-ip:8080/
+
+
+# check app container logs
+$ docker logs <app-container-name>
+
+# Connect to DB Container
+$ docker exec -it <db-container-name> /bin/bash
+
+# connect with mysql db using mysql client
+$ mysql -u root -p
+
+# display databases available in mysql
+$ show databases
+
+# select db name (sbms is our db name)
+$ use sbms
+
+# display tables created in database
+$ show tables
+
+# Display table data( book is our tablename)
+$ select * from book;
+
+# exit from database
+$ exit
+
+# exit from container
+$ exit
+
+
+========================
+Docker Compose Commands
+========================
+
+# Create Containers using Docker Compose
+$ docker-compose up
+
+# Create Containers using different file name
+$ docker-compose -f <filename> up
+
+# Run docker containers in detached mode
+$ docker-compose up -d
+
+# Display containers created by docker compose
+$ docker-compose ps
+
+# Display docker images
+$ docker-compose images
+
+# Check container logs
+$ docker logs -f <container-name>
+
+# Stop & remove docker containers
+$ docker-compose down
+
+

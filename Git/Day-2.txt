@@ -1,0 +1,62 @@
+Branches
+------------
+=>Branches are alternative developement zones for a project
+=>They enable us to work on multiple ideas in parallel.
+
+Head
+------
+=>Head id s pointer which refers to the current location in the repository.
+=>It points to a particular branch reference.
+
+*git branch - lists all the branch in the repo
+*git branch <branch-name> - creates a new branch
+*git switch <branch-name> - switches to a new branch
+  git switch -c <branch_name> - this will not only create a new branch it will also switch to it.
+
+*git checkout - this will also switch branches and much more like
+
+Note: say we have a condition that on 
+
+branch-1      branch-1                 branch-2
+one.txt       one.branch				one.branch
+ * one			*one
+ * two			*two
+ *three
+				
+Alright, here's the gist: when you add changes to one.txt in branch-1 and then switch to another branch where one.txt exists but with no content, Git gets cranky. It doesn't want to overwrite your changes, 
+so it'll ask you to either stash those changes, add them to the staging area, or commit them.
+
+*git branch -d <branch_name> - this is used to delete the specific branch.
+*git branch -m <branch_name> - it is used to rename the branch.
+*git branch -v --> it gives out the the recent most commit with the message from each branch
+
+
+
+Merging Branches
+-------------------
+It takes changes from one branch and combines into another.
+
+=>We merge branches but not specific commits.
+*Go to the branch where you want the merge to take place (git switch main)
+*run git merge giving_branch
+
+Fast forward merge
+------------------
+
+https://drive.google.com/file/d/1D2bzXjdRO3gG_ttLtVwGiDKPfmXCzKFF/view?usp=drive_link
+
+So in the repo we can see there are some branches
+*oldies
+*2000s
+*master
+*empty playlist
+*georges
+
+so as seen the oldies branch is very ahead in the commits relative to master.
+After running the command 
+git switch master
+git merge oldies
+
+we can see that the master has fast forwaded.
+
+https://drive.google.com/file/d/1_85jwpx_1Q5dCU2EeJxJ-JBcZScKYEIK/view?usp=drive_link

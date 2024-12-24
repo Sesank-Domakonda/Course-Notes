@@ -1,0 +1,34 @@
+Docker - Docker is a containerization platform. It is used to deploy the applications as containers.
+
+Docker swarm - It is an Orchestration platform. It is used to manage docker containers. 
+Orchestration means managing the processes.`
+ -> Managing refers to creating, updating, scaleup, scaledown, remove containers.
+Docker swarm is embedded in Docker engine (no explicit installation is required.)
+ Note: In market we have docker swarm, kubernetes, openshift as Orchestration platform.
+Say we have a container runnign on the Host OS and suddenly there are many customers who are accessing the container. 
+So when the load is increased on the application it may crash so we have to run the application on several containers instead of one container.
+
+
+Using the Docker swarm we can easily scale up adn scale down te container.
+
+Working
+--------
+Instead of running teh application in a single containers we are going to setup cluster. 
+Cluster - > group od servers.
+
+Docker swarm follows the Cluster Architecture to manage the docker containers. It has 
+1) Master Nodes - It will manage the worker nodes and it will assign task to worker nodes.
+2) Worker Nodes - Will perform the tasks based on the master node instructions.
+
+
+
+                                    Worker 1
+
+Master Node                         Worker 2
+
+                                    Worker 3
+
+If we want to deploy the containers directly we handover the responsibility to Docker swarm.
+
+
+

@@ -1,0 +1,29 @@
+Kubernets Cluster Setup
+-----------------------
+Kubernets Cluster can be setup in Many ways
+
+* Self Managed K8S Cluster: We can take a linux machine and install all the required softwares in it.
+  ------------------------
+=> Mini Kube (Single node cluster) : Not used in real time projects.
+=> Kubedium (Multi node cluster) : Simialar as the architecture we have seen in the diagram having multiple nodes.
+
+* Managed K8S Cluster : 
+  -------------------
+=> AWS EKS
+=> Azure AKS
+=> GCP GKE
+=> IBM IKE
+
+
+
+Kuber config file: Contains the cluster information about EKS Cluster.  kubectl sends the request to the control plane.
+
+
+In the AWS we will create  
+=> a linux machine called EKS Client VM. We will install several softwares 
+=> (AWS CLI) in it to create and communicate with the cluster. We will manage the permission to create the cluster with the IAM. Using CLI we will create a cluster( Control plane and worker nodes).
+=> To communicate with the cluster we will install kubectl cli. In order for kubectl to know where the cluster is we will setup the kubeconfig file in the client machine.
+
+Using the client machine we will create a cluster then we will send request to the control plane and then control plane will request the worker nodes.
+
+ 

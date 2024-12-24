@@ -1,0 +1,18 @@
+version : "3"
+
+services:
+  application:
+  
+
+
+  db-container:
+    image: dbms
+
+    environment:
+      - name=value
+
+
+
+network: application-db-contiainer
+
+    

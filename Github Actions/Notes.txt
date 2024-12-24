@@ -1,0 +1,98 @@
+Event Filters
+-------------
+=> Event filters specify conditions that determinred
+s must be met for a workflow to run when an event occurs.
+
+Activity types
+---------------
+=> Activity types are specific actions within an event that can trigger a workflow.
+
+
+
+Workflow Contexts
+-----------------
+Acess the information about runs, variables,  jobs.
+
+Github provides multiple sources of data in different contexts so that we can easily ptovide all the necessary information to our workloads.
+
+github                    env                                       inputs
+*commit SHA               contains variables that have              contains input properties passed via
+*Event name               been defined in a workflow, job           the keyword with to an action, to a reusable workflow,
+*Ref of branch or tag     or  step.                                 to a manually triggered workflow.
+
+
+Context:
+---------
+=> guthub provides multiple sources of data in different contexts. So that we can easily provide all the necessary info to our workloads.
+environment variables: These variables are the ones which 
+
+
+Environment variables: These are like settings/lebels you place your desk to customize your workspace according to your preferences and needs.
+ex: Environment Variable: COFFEE_MUG_LOCATION
+	Value: left
+
+Repository variable: In github repo variables are special environment variables defined at the repo level.
+They provide a way to store and manage teh sensitive info like API keys, credentials.
+
+
+Github expressions
+------------------
+=> Use dynamic values and expression in your workflows.
+	*They can be used to reference information from multiple sources within the workflow.
+	*Must use the ${{<expression>}}} syntax.
+
+can be any combination of:
+*Literal values : Strings, numbers, booleans, null
+*Context values : Values passed via the many workflow contexts.
+*Functions: Built-in functions provided by Github actions.
+*Operators such as : !, <,>,!=,??&&,||.
+	
+	
+	
+Variables
+-----------
+=>Used to set and reuse non-sensitive configuration information.
+
+Single-workflow 						                                                   Multiple Workflows
+
+env:																						NAME: Lauro   #variables defined at the organization level
+	NAME: Lauro 
+	#Here the variables are declared at the workflow level									  NAME: John   #variables defined at the repo level
+																							  LAST_NAME: Doe
+	say-hello:																				
+	 runs-on: ubuntu-latest
+	 env:
+	  NAME: John #Variables declared at job level												NAME: Jane  #variables defined at the environment level
+	  
+	 - run: echo "Hello $NAME!"		
+	   env:		 #Variables declared at the step level
+		 NAME: Jane
+		 
+		 
+=>Here the variables declared at the a lower level                                              =>variables declared at environment level > vars at repo level > vars at org level
+
+will override the variables declared at the upper 
+level.
+		 
+	
+
+=>We can access the variables by declaring the particualar envionment in which they are declared.
+
+
+Functions
+----------
+there are 2 types of functions
+=> General Purpose functions
+*Interacts with data from multiple context and model more complex behavior, like more advanced control of the workflow and job execution.
+ex: contains(), startsWith(), endsWith(), fromJSON(), to JSON()
+
+=>Status check functions
+These allow using the status of the workflow, previous jobs or steps to define whether a certain job or step should be executed.
+success()  - Runs the step to notify success only if all the previous steps completed successfully. 
+failure()  - Runs teh step to notify failute if any of previous step failed.
+always()   - Ensures the step runs regardless of the outcome of previous step.
+cancelled()- Runs the step to notify cancellation if the workflow was cancelled.
+
+
+Inputs and outputs
+=====================

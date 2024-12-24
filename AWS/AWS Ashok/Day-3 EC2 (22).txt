@@ -1,0 +1,71 @@
+AWS - Amazon Web services
+---------------------------
+=> As Amazon is providing services over the web we are calling it as Amazon webservices.
+=> Providing IT resources on demand basis is called as cloud computing.
+
+Region - One geographical location
+Availability ZoneL Data center.
+
+=> One region can have Multiple Data centers.
+
+=> Data center means set of servers with network and power.
+
+
+Services Learnt in the course
+-----------------------------
+1)EC2 - Elastic Compute Cloud
+2)S3 Simple Storage Serice
+3)RDS- Relational Database Management System
+4)EBS - Elastic Block Storage
+5)ELB: Elastic Load Balancer with Auto scaling
+6)Elastic Bean Stack - Provides PaaS
+7)VPC: Virtual Private Cloud
+8)Cloud Watch
+9)Cloud Formation
+11) Cloud Front
+12)SES - simple Email Service
+13)SQS - Simple Queue service
+14)SNS - simple Notiication servie
+15)Lightsail 
+16)Route 53
+17)IAM
+18)AWS Gateway
+19)Running Docker Containers
+20) CI CD
+21) ECS - Elastic Container Service.
+
+
+Elastic Compute Cloud
+---------------------
+=> It is most popular offering of AWS
+=> EC2 provides scalable computing cloud in AWS
+
+If we use EC2 then we don't havet to purchase computers for our infrastructure.
+
+Note: One Virtual Machine is called as one VM or one onstance.
+----
+EC2 provides AMI(Amazon Machine Image) - pre configured linux.
+EC2 provides secured instances with key-pair.
+It is a regional service.
+
+EC2 provides the instance with security groups
+---------------------------------------------
+
+Security has Inbound rules and Outbound rules.
+
+
+Inbound rules - who can access the ec2.
+Outbound rules - what can ec2 access outside.
+
+
+we have SSH :22
+        RDP : 3389
+        HTTP: 80
+        HTTPS: 443
+
+
+Task
+----
+1) create EC2 instanec with amazon linux2
+2) Setup web servers
+3) Modify index.html file to display "welcome to my website-1" 

@@ -1,0 +1,56 @@
+RDS  - Relational Database Service
+====
+For every application we need a DB instead of creating it locally we will do it in the cloud.
+
+Every application will have 3 layers
+*Front end (UI)
+*Back End (business logic)
+*Data base
+
+Challenges with database setup
+-----------------------------
+1) Setup Machine to install DB server
+2) Purchase DB server license
+3) Install DB server in our  machine
+4) Setup power for the machine
+5) Setup a server room to keep our machine
+6) Setup AC for room
+7)Setup security for room
+8) Setup DB backups
+
+=> Using cloud the cloud provider will take care of all the works which are required for DB application.
+=> In AWS we have RDS service to create and setup DB required fo application.
+=> we just need to pay the money and use DB using AWS RDS service.
+
+Steps to create MYSQL DB using RDS Service
+------------------------------------------
+Search for RDS ----> click on create DB ---> Select the required DB creation method(easy or standard) ---> Select the engine(MySQL, Aurora...) ---> DB INstance size(freetier/prod/dev) --->
+Provide the db identifier, username and password\
+
+once the DB is created it will generate an endpoint which can be used in our application.
+uname: admin
+pword: 321Kashes
+port :3306
+dbname: ihis
+
+we have to provide DB properties to project team.
+
+Steps to test MYSQL DB Setup
+-----------------------------
+=> To test the DB after it is created we can use MySQL workbench.
+
+
+GUI Client                                              AWS Cloud    DB Endpoint URL, DB Username, DB port
+(My SQL workbench)     -------------------------------      RDS
+client s/w                                                MySQL DB
+                                                              |
+                                                              |
+                                                              |
+                                                            Java App
+
+
+=> In the MySQL workbench we can provide the info
+hostname - endpoint URL
+Username: admin
+password: 321Kashes 
+andclick on test connection.

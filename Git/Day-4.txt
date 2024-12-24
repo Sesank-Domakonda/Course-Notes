@@ -1,0 +1,70 @@
+Detached head
+-------------
+=>This means you can make experimental changes and commit them and you can discard any commits you make in this state withput impacting any branches by switching back to a branch.
+
+*git checkout <commit_id>
+
+what is detached head?
+-----------------------
+=> Head usually points to current branch reference
+=>The branch reference is a pointer to the last commit made on a particular branch.
+
+=>When a new commit is made, the branch pointer is updated to reflect the new commit.
+=>The head remains the same beacause its pointing at the branch reference.
+
+
+So head usually refers to a branch but not a specific commit.
+
+so if we checkout to a particular commit, HEAD points at that commit rather than at the branch pointer.
+
+
+What exactly happens in detached head state?
+--------------------------------------------
+
+*Stay in detached HEAD to examine the contents of the old commit. Play around, view the files,etc.
+*Leave and go back to whenever you were before - reattach HEAD.
+*Create a new branch and switch to it. You can now make and save changes, since HEADis no longer detached.
+
+
+Restore
+---------
+* It helps to undo unstaged changes (Changes which are not addest ot the staging area) and also unstage the staged files.
+
+*git restore <file_name> - this will now undo the changes which are not saved and not staged.
+*git restore --source HEAD~1 <file_name> -- restore a specific file staged/unstaged to a specific state.
+*git restore --staged <file_name>  - this is used to unstage files.
+
+
+---------------------------
+Restore
+---------
+=>Used to undo unstaged changes.
+*git restore . /<file_name> - says that the file or all the files are to be taken to the stage of recent commit.
+*git restore --staged <file_name> - it says that to take the
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+Undoing staged changes
+-----------------------
+
+Reset
+-------
+Suppose you made few commits and then realised you made them in the wrong branch. So we can undo those commits with the reset.
+
+*git reset <commit_hash> - this will just undo the commits but the changes are still in the working directory.
+
+refer from the slides
+
+hard reset
+*git reset --hard <commit> - this will both undo the commits and the actual changes in your files, you can use the --hard option.
+
+
+Summary of the Restore and Reset commands
+------------------------------------------
+*git restore <file_name> - restore it to the last committed state
+*git restore --source <commit_id> <file_name> - restore the file to a specific state in the specified commit
+*git restore --staged <file_name> - remove the file from staging area but keeps changes in the working directory.
+
+
+Reset

@@ -1,0 +1,135 @@
+Creating a SOAP service
+------------------------
+
+Build a SOAP Service which takes name(String) as input , prefix Hello and send it back as response.
+
+The first part of integration is creating a caonnection and for the SOAP integration we will create a SOAP service connection but the differenc ewith the REST connection is that we don't have to pass anything as an input but for that
+SOAP serice we have to pass the Concrete WSDL URL or  abstract WSDL as an input.
+
+=> we will be only shown the operations which are defined in the WSDL.
+
+ex: abstract WSDL URL
+
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://example.com/greeting"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://example.com/greeting"
+             name="GreetingService">
+
+    <types>
+        <xsd:schema targetNamespace="http://example.com/greeting">
+            <xsd:element name="GreetingRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GreetingResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="message" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="GreetingRequest">
+        <part name="parameters" element="tns:GreetingRequest"/>
+    </message>
+    <message name="GreetingResponse">
+        <part name="parameters" element="tns:GreetingResponse"/>
+    </message>
+
+    <portType name="GreetingPortType">
+        <operation name="getGreeting">
+            <input message="tns:GreetingRequest"/>
+            <output message="tns:GreetingResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="GreetingBinding" type="tns:GreetingPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getGreeting">
+            <soap:operation soapAction="http://example.com/greeting/getGreeting"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="GreetingService">
+        <port name="GreetingPort" binding="tns:GreetingBinding">
+            <soap:address location="http://example.com/greeting"/>
+        </port>
+    </service>
+
+</definitions>
+
+
+Start with the definitions: This is the container for all the other elements.
+
+1)types: Understand the data types and structures used.
+2)messages: See what data is being sent and received.
+3)portType: Understand the available operations.
+4)binding: See how the operations are mapped to the protocol.
+5)Find the service: Identify where to access the service.
+
+
+
+
+
+
+SOAP Webserice ----> Abstract WSDL (File) ---> Implement it in OIC ----> Concrete WSDL (URL) (Operation --> Logical Units)
+
+=> When we create a SOAP connection we need WSDL file can create an SOAP specification in 2 tyeps
+*Abstract file - this will be in the form of a file which includes
+  => Data types       port type ----> operations ----> for each operation we have input and doutput message
+  => Messages
+  => operations
+
+*Concrete WSDL URL
+  => Data types
+  => Messages
+  => operation
+  => Endpoint details
+
+
+The procedure  for the integration of SOAP integration remains the same but if we select a certain operation then the requst object and the response object related to it are displayed.
+=> But the difference is that we cannot test the SOAP integration toward teh end it wiill just generate an abstract WSDL URL to test.
+We need to use external software like SOAP UI.
+
+
+We can start a SOAP webservice --------> Abstract WSDL (FILE) ------> Implement it in OIC ---> Concerete WSDL (URL)
+
+
+Trigger connection determines 3 things:
+---------------------------------------
+
+* It determines whether service gets exposed as SOAP or REST.
+* How the auth details are passed when you trigger the integration?
+* It determines request and response payloads of the service.
+
+Adding Javascript Libraries
+--------------------------
+
+click on projects -----> the 4th cell will be libraries ---> click on + button --> add the library
+
+go to the integration ---> click on the 3 dots to the right ----> click on Edit ----> open the integration --> click on the action (thunder symbol) to the right --> add the js function to the integration ---> click on function in js -->
+select the function --> give the input params
+
+In the mapper 
+remove the existing map --> joing the JS file to the greeting node
+
+
+Another way to invoke a js function
+
+click on integration--> open the mapper ----> click on the toggle function to the top right (<) --> click on user defined --> select the function
+
+
+refer video 9 again for revision

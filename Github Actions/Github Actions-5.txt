@@ -1,0 +1,24 @@
+Why to use Custom Actions?
+
+Eventhough there are tons of actions we want to build the custom actions because:
+
+*simplify various steps in workflow 
+ex:Instead of writing multiple step definitions you can build and use a single custom actions.
+
+=> Multiple steps can be grouped into a single action.
+ex: getting the code, cache it.
+
+so we can create custom actions to group the commonly performed steps and make it into an actiona and reuse it.
+
+*No existing(Community) Action:
+=> This is when the public actions might not solve the specific problem you have in the workflow.
+=> Custom actions can contain any logic you need to solve your specific workflow problems.
+
+
+Different types of Custom actions
+----------------------------------
+*Javascript Actions 
+*Docker Actions 
+*Composite actions
+
+https://drive.google.com/file/d/1LqV2aB20xkA9H58Iy3JDpzUlMg0XX3gv/view?usp=drive_link

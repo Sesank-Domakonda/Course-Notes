@@ -1,0 +1,6 @@
+when we are building a complex integration we need not put everythin into one integration.
+Instead we can use the existing integrations.
+
+=> we can select an integration and open it in the edit mode. 
+
+click on the integration ----> CLick on the + button b/w nodes -----> Select the integration to be called.

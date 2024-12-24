@@ -1,0 +1,139 @@
+REST API
+---------
+
+=> Rest API consists of Endpoints (http).
+=> Any rest API have to be invoked the link will be provided.
+
+
+whar are end points?
+fundamental elements of REST.
+
+OCI - Oracle cloud Infrastructure 
+=>It is a screen which gives the Console overview.
+=>It is called IaaS - Infrastructure as a Service.
+
+
+
+OIC - Oracle Integration Cloud
+
+we can login through cloud.oracle.come
+
+=>the first screen is the cloud account name (ex: hsbc).
+
+from here we can launch a VM/ Create a DB
+
+
+Creating an OIC instance
+-------------------------
+=>Name: Start with by giving a name (Usually name of client + phase of project + keyword oic ex:hsbcdevoic).
+=>Phases : Dev, SIT, UAT, Prod
+
+=> Edition:
+
+              standard:           Enterprise
+
+PCS             no                   yes
+Onprem adapter  no                   yes
+
+
+=> Shape:
+* development
+* production
+
+=> Messages: one instance = 1 message.
+
+After creating users we need to grant them access to the OIC instance.
+(Identity -> Domains -> Default domain -> Oracle Cloud Services -> oic-sesank-instance1041-idvjlhakrnma-ia -> Application roles)
+
+
+
+
+projects
+----------
+=> We use projects only in case where we want to seperate the integrations for different users.
+=> It is used for access control.
+=> If we want to import the integrations we can directly import all the intgration in the projects.
+Ex: finance related integration seperated from hr related.
+
+Difference between packages and projects
+
+     Packages                                                    projects
+     ---------------------------------------------------------------------
+=>  Used for access control and                               =>group related integrations for 
+    seperate integrations for different                         easier management, deployment and sharing
+    users/teams
+
+
+Trigger and invoke
+-------------------
+=> The first connection in an integration is Trigger. If we use the  connection in the integration it is called invoke.
+so when we select the option if the connection is trigger/trigger & invoke then we need to choose
+trigger - If the connection is used to start or initiate the integration process.
+Invoke - If the connection is used to call or interact with an external system during the integration process.
+trigger & invoke - f the connection can both initiate the process and interact with external systems.
+
+
+Creating the REST API
+-----------------------
+After creating the integration -> to Create the rest trigger we enter the name, what does it do and the endpoint (sayHello/{firstName}).
+we cannot pass the request payload (input text) for the POST an GET. So when we select the GET/POST for this then we can see that 
+there are three checkboxes  below
+*Add and review parameters for this endpoint. (forced when we add more than one parameter)
+*Configure a request payload for this endpoint. 
+*Configure this endpoint to receive the response. (client will be able to trigger the integration)
+
+Query parameter : Apart from the template parameters we can also pass the values through the query parameters.
+=> But when we mention it in the query parameter then we should not mention it in the link.
+so something like /sayHello
+
+but the url looks like sayHello?q=fName=Sachin&lName=Tendular.
+
+
+when to use template parameter and when Query parameter?
+------------------------------------------------------
+=> template parameter when we want multiple records in output and query for only one record.
+
+After creating an integration we see a Mapper element with dotted lines around indicating that the mappings are not done.
+
+
+Creating an Integration
+=======================
+*First create a project (find it on the lft side)
+*Click on the pojects -> Create a connections -> Create a rest API -> Select the type of connection trigger/Invoke etc.
+
+Integration
+-----------
+ Go into the Integration -> Click on create an integration -> Give the necessary info (name,what does it do..)
+ Opearation info like name, what does it do(text) -> Enter the URL -> Select the action (GET, PUT, POST, DELETE)
+ Select the options to be configured (add/review params , Configure a request payload for this endpoint, configure this endpoint to receive the response (client can trigger the REST)) -> Click next 
+ Configure request parameters: add query params(if necessary but remove the template in the URL in previous page) click next
+ Select the sample payload -> click on the inline/ Upload JSON. Click next
+ Summary page.
+
+after doing the above we will find the mapper element which has to be mapped.
+we will see the element on the target are coming from the sample request payload.
+
+
+Mapping
+-----------
+
+While mapping the elements we can not only dynamic values we can also add the literal values.( click on the map line and then click on the T box on the top).
+
+After creating an integration it will be in a draft stage.
+so we need to activate it.  draft -------> configure ------> tracking -----------> activate
+
+So these trsacking identifiers will help to find the tracking the instances.
+for example if the firstname is given as john and if we set the tracking identifier as first name then once the integration is made active then we can find it in the observability.
+
+Adding the traking identifiers
+-------------------------------
+So click on the intgrations -> find the business identifier option under the Share option ->  click on it and add the tracking identifiers 
+
+Save it and then activate the integration by clicking on the three dots on the integration.
+
+We can run it.
+
+
+We can test this by the link (find it in the screen after activating the integration and then running the integration -> click on the access the metadata -> copy the URL).
+
+This URL can be copied and be used in the postman. But the auth token(Can be oauth/ credentials) are determined by the security option in the connection.

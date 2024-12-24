@@ -1,0 +1,10 @@
+Container and Network Requests
+==============================
+
+We can create a network of containers with the --network flag while creating the container / docker network command.
+
+*docker network create <name> - it creates a network.
+*docker network ls - gives the list of networks.
+
+* docker run --name <name> --network <name_of_network> <image_name>
+

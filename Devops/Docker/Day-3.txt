@@ -1,0 +1,98 @@
+There are 3 types of data.
+*Application (code + environment) 
+  - written and provided by the developer.
+  - Added to image and container in build phase.
+  - It is fixes and connot be changed once built.
+  - read only so stored in images.
+
+*Temporary data
+  - generated while running containers
+  - stored in memory or temporary files
+  - Dynamic and changing but cleared regularly.
+  - Read + write so stored in containers.
+
+
+*Permanent data
+  - Fetched/produced in running containers.
+  - Stored in a file/DB
+  - Must not be stopped if container restarts
+  - Read + write stored with containers and volumes.
+
+
+volumes
+--------
+=>The problems with containers are that when they are created or restarted any data stored inside the containers filesystem can be lost. To prevent this especially for the applications that need to persist data across restarts
+we make use of the volumes.
+
+we can include the volumes in the Dockerfile.
+
+VOLUMES ["/app/feedback"]
+
+There are 2 types of volumes
+*Volumes (managed by docker)
+*Blind Mounts (managed by you)
+
+
+Volumes
+-------
+=> Volumes connect some folder outside of a container to a folder inside of a container.
+
+we have two types of volumes
+*Anonymous volumes
+*Named volumes
+
+Anonymous volumes
+-----------------
+=> Docker sets upa folder/path on your host machine. The exact location os unknown to the dev.
+It is managed via docker volume commands.
+
+=> Once the container is stopped then the anonymous volumes ar gone.
+
+=>They exist only as long as the container exists.
+
+*docker volumes ls - gives list of all the volumes created.
+
+Named Volumes
+-------------
+=> A defined path in a container is mapped to some folder on the host machine.
+=> They are great for data which should be persistent but which you cannot view directly.
+
+We cannot create named volume directly in the container.
+
+we can create named volumes with -v flag.
+the path is given in the order of <volume_name>:<container-path>.
+
+*docker run -p 3000:29 -v feedback:app/feedback --name feedback-app  feedback-node:volumes
+Using the -v flag in the docker run command, we specify the path inside the container's file system where we want to mount our volume. We can give any name of our choice for the volume on the host, like feedback:/app/feedback. These named volumes ensure that data is not deleted when the container is removed.
+
+
+Bind Mounts
+============
+-> It is a path on host machine which you know and specified that is mapped to some container-internal path.
+
+=> Whenever we change something in the sourcecode/something in the directory it is not reflected in the image.
+=> They are similar to volumes but in bind mounts we set the path to which the container internal path should be mapped on host machine.
+=> Contrary to the named volumes bind mounts are managed by the host system.
+=> Containers can write/read from the bindmounts. We can put the source code in the bindmount. So the container will have access to the latest code.
+rather than a image of source code in the image.
+
+
+=> When we try to work with bind mounts the files on the local host will override the ones in the container.
+
+Anonymous volumes: You can use them to prioritize container-internal paths higher tan external paths.
+
+Type	                      Use Case	                           Managed by Docker	      Persistent	           Host Access	           Example
+Named Volumes	     Persistent data for reuse across containers	    Yes	                      Yes	                   No	        -v my_named_volume:/app/data
+Anonymous Volumes	 Temporary data	                                  Yes	                       No	                   No	        -v /app/cache
+Bind Mounts        Directly map host directory/file	                No	                       Yes	                 Yes	      -v $(pwd)/src:/app/src
+
+
+  Read only volumes
+  =================
+  =>By default volumes are read write which means contianers read data from there and write data to them.
+  => the container should not be able to override.
+
+  we can do this by using ro.
+
+* docker volumes ls - it gives the list of volumes docker manages.
+
